@@ -21,14 +21,14 @@ public class DemoService {
                 demoRequest.refId(),
                 demoRequest.demoString(),
                 demoRequest.demoInt(),
-                demoRequest.demoBool(),
-                demoRequest.demoList()
+                demoRequest.demoBool()
+//                demoRequest.demoList()
         );
         return demoRepository.save(demo);
     }
 
     public List<Demo> getAllDemos() {
-        return demoRepository.findAll();
+        return (List<Demo>) demoRepository.findAll();
     }
 
     public Demo getDemo(String id) {
@@ -47,7 +47,7 @@ public class DemoService {
             existingDemo.setDemoString(demoRequest.demoString());
             existingDemo.setDemoInt(demoRequest.demoInt());
             existingDemo.setDemoBool(demoRequest.demoBool());
-            existingDemo.setDemoList(demoRequest.demoList());
+//            existingDemo.setDemoList(demoRequest.demoList());
             return demoRepository.save(existingDemo);
         }
         return null;

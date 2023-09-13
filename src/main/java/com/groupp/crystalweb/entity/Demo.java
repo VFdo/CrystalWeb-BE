@@ -1,22 +1,22 @@
 package com.groupp.crystalweb.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document("demo")
+@Entity
 public class Demo {
     @Id
     private String refId;
     private String demoString;
     private int demoInt;
     private Boolean demoBool;
-    private List<String> demoList;
+//    private List<String> demoList;
 }

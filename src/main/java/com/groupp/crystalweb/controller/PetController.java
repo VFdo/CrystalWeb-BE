@@ -3,9 +3,7 @@ package com.groupp.crystalweb.controller;
 import com.groupp.crystalweb.dto.request.PetRequest;
 import com.groupp.crystalweb.entity.Pet;
 import com.groupp.crystalweb.service.PetService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PetController {
@@ -15,15 +13,17 @@ public class PetController {
         this.petService = petService;
     }
 
-
     //    save pet
     @PostMapping("pet")
     public Pet savePet(@RequestBody PetRequest petRequest){
-        Pet savedPet = petService.savePet(petRequest);
-        return savedPet;
+        return petService.savePet(petRequest);
     }
 
 //    update pet
+    @PutMapping("pet/{id}")
+    public Pet updatePet(@PathVariable String id, @RequestBody PetRequest petRequest){
+        return petService.update(id, petRequest);
+    }
 
 //    find pet
 

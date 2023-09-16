@@ -7,6 +7,6 @@ public record PetRequest(
         String name,
         Date dob,
         String typeOfAnimal,
-        Byte[] photo
+        byte[] photo
 ) {
 }

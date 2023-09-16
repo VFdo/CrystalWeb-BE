@@ -20,5 +20,5 @@ public class Pet {
     private String name;
     private Date dob;
     private String typeOfAnimal;
-    private Byte[] photo;
+    private byte[] photo;
 }

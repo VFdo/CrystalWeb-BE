@@ -17,7 +17,7 @@ public class PetController {
 
 
     //    save pet
-    @PostMapping
+    @PostMapping("pet")
     public Pet savePet(@RequestBody PetRequest petRequest){
         Pet savedPet = petService.savePet(petRequest);
         return savedPet;

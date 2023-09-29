@@ -6,6 +6,7 @@ import com.groupp.crystalweb.repository.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,20 @@ public class PetService {
             log.info("Pet not found for id: P{}", petRequest.refId());
             return null;
         }
+    }
+    public Pet getPet(String id) {
+        Optional<Pet> pet = petRepository.findByRefId(id);
+        if(pet.isPresent()){
+            return pet.get();
+        }
+        return null;
+    }
+
+    public List<Pet> getAllPets() {
+        return (List<Pet>) petRepository.findAll();
+    }
+
+    public long deletePet(String id) {
+        return petRepository.deleteByRefId(id);
     }
 }

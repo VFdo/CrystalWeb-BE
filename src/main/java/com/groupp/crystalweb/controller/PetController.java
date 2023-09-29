@@ -5,6 +5,8 @@ import com.groupp.crystalweb.entity.Pet;
 import com.groupp.crystalweb.service.PetService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class PetController {
     private final PetService petService;
@@ -13,7 +15,7 @@ public class PetController {
         this.petService = petService;
     }
 
-    //    save pet
+//    save pet
     @PostMapping("pet")
     public Pet savePet(@RequestBody PetRequest petRequest){
         return petService.savePet(petRequest);
@@ -25,7 +27,25 @@ public class PetController {
         return petService.update(id, petRequest);
     }
 
-//    find pet
+//    find pet by id
+    @GetMapping("pet/{id}")
+    public Pet findPet(@PathVariable String id){
+        return petService.getPet(id);
+    }
+
+//    get all pets
+    @GetMapping("/pet")
+    public List<Pet> getPets(){
+        return petService.getAllPets();
+    }
 
 //    delete pet
+    @DeleteMapping("pet/delete/{id}")
+    public String deletePet(@PathVariable String id){
+        long deleted = petService.deletePet(id);
+        if(deleted != 0){
+            return ("Item deleted successfully");
+        }
+        return "Item not found!";
+    }
 }

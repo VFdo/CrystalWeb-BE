@@ -1,8 +1,8 @@
 package com.groupp.crystalweb.service;
 
 import com.groupp.crystalweb.dto.request.DemoRequest;
-import com.groupp.crystalweb.entity.Demo;
-import com.groupp.crystalweb.repository.DemoRepository;
+import com.groupp.crystalweb.models.Demo;
+import com.groupp.crystalweb.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Service
 public class DemoService {
-    private final DemoRepository demoRepository;
+    private final UserRepository demoRepository;
 
-    public DemoService(DemoRepository demoRepository) {
+    public DemoService(UserRepository demoRepository) {
         this.demoRepository = demoRepository;
     }
 

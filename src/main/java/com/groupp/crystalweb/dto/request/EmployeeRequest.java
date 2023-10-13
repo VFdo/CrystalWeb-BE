@@ -1,6 +1,6 @@
 package com.groupp.crystalweb.dto.request;
 
-import com.groupp.crystalweb.entity.Gender;
+import com.groupp.crystalweb.entity.Employee;
 import com.groupp.crystalweb.entity.Role;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public record EmployeeRequest(
         Role employeeRoleId,
         String employeeName,
         Integer employeeAge,
-        Gender employeeGenderId,
+        Employee.Gender employeeGender,
         List<String> employeePhoneList,
         String employeeEmail,
         String employeeAddress,

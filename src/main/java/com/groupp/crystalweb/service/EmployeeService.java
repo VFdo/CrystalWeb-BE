@@ -25,7 +25,7 @@ public class EmployeeService {
                 employeeRequest.employeeRoleId(),
                 employeeRequest.employeeName(),
                 employeeRequest.employeeAge(),
-                employeeRequest.employeeGenderId(),
+                employeeRequest.employeeGender(),
                 employeeRequest.employeePhoneList(),
                 employeeRequest.employeeEmail(),
                 employeeRequest.employeeAddress(),
@@ -60,7 +60,7 @@ public class EmployeeService {
             existingEmployee.setEmployeeRoleId(employeeRequest.employeeRoleId());
             existingEmployee.setEmployeeName(employeeRequest.employeeName());
             existingEmployee.setEmployeeAge(employeeRequest.employeeAge());
-            existingEmployee.setEmployeeGenderId(employeeRequest.employeeGenderId());
+            existingEmployee.setEmployeeGender(employeeRequest.employeeGender());
             existingEmployee.setEmployeePhoneList(employeeRequest.employeePhoneList());
             existingEmployee.setEmployeeEmail(employeeRequest.employeeEmail());
             existingEmployee.setEmployeeAddress(employeeRequest.employeeAddress());

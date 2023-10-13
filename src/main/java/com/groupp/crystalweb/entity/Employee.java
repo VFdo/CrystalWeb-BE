@@ -9,16 +9,14 @@ import java.io.Serializable;
 
 import java.util.List;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "employee")
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     private String refId;
 
     private String employeeNIC;
@@ -30,9 +28,14 @@ public class Employee implements Serializable {
 
     private Integer employeeAge;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Gender employeeGenderId;
+    public enum Gender{
+        MALE,
+        FEMALE;
+    }
 
+    private Gender employeeGender;
+
+    @Transient
     private List<String> employeePhoneList;
 
     private String employeeEmail;
@@ -43,6 +46,7 @@ public class Employee implements Serializable {
 
     private Integer employeeRequiredDailyHours;
 
+    @Transient
     private List<String> employeeSkillList;
 
     public String getRefId() {
@@ -84,12 +88,12 @@ public class Employee implements Serializable {
         this.employeeAge = employeeAge;
     }
 
-    public Gender getEmployeeGenderId() {
-        return employeeGenderId;
+    public Gender getEmployeeGender() {
+        return employeeGender;
     }
 
-    public void setEmployeeGenderId(Gender employeeGenderId) {
-        this.employeeGenderId = employeeGenderId;
+    public void setEmployeeGender(Gender employeeGender) {
+        this.employeeGender = employeeGender;
     }
 
     public List<String> getEmployeePhoneList() {

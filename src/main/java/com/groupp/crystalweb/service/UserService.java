@@ -1,7 +1,7 @@
 package com.groupp.crystalweb.service;
 
 import com.groupp.crystalweb.dto.request.UserRequest;
-import com.groupp.crystalweb.models.User;
+import com.groupp.crystalweb.entity.User;
 import com.groupp.crystalweb.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

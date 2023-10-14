@@ -1,7 +1,7 @@
 package com.groupp.crystalweb.controller;
 
 import com.groupp.crystalweb.dto.request.UserRequest;
-import com.groupp.crystalweb.models.User;
+import com.groupp.crystalweb.entity.User;
 import com.groupp.crystalweb.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +37,7 @@ public class UserController {
     }
 
 //    update by id
-    @PutMapping("demo/{id}")
+    @PutMapping("user/{id}")
     public User updateUser(@PathVariable String id, @RequestBody UserRequest userRequest){
         return userService.update(id, userRequest); //?
     }
@@ -47,9 +47,9 @@ public class UserController {
     public String deleteUser(@PathVariable String id){
         long deleted = userService.deleteUser(id);
         if(deleted != 0){
-            return ("Item deleted successfully");
+            return ("User deleted successfully");
         }
-        return "Item not found!";
+        return "User not found!";
     }
 
 }

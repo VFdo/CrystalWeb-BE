@@ -1,4 +1,4 @@
-package com.groupp.crystalweb.models;
+package com.groupp.crystalweb.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

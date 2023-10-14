@@ -1,7 +1,7 @@
 package com.groupp.crystalweb.repository;
 
 
-import com.groupp.crystalweb.models.User;
+import com.groupp.crystalweb.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

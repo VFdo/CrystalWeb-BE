@@ -1,4 +1,4 @@
-package com.groupp.crystalweb.models;
+package com.groupp.crystalweb.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,16 +18,11 @@ import lombok.NoArgsConstructor;
 //@allArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
     private String userName;
     private String password;
-    public Role role;
+    private Role role;
 
-    enum Role{
-        ADMIN,
-        STAFF,
-        CLIENT
-    }
+
 
 }

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface DemoRepository extends CrudRepository<Demo, String> {
-       Optional<Demo> findByRefId(String refId);
-       long deleteByRefId(String refId);
+    Optional<Demo> findByRefId(String refId);
+    long deleteByRefId(String refId);
 }

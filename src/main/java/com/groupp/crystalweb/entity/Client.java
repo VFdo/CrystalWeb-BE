@@ -7,15 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Demo {
+@Table(name = "client")
+public class Client {
     @Id
     private String refId;
-    private String demoString;
-    private int demoInt;
-    private Boolean demoBool;
-//    private List<String> demoList;
+    private String name;
+    private String nic;
+    private String address;
+    private String phone;
+    private String email;
+    private String role;
+
 }

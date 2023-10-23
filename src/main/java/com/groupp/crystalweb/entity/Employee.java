@@ -21,7 +21,7 @@ public class Employee implements Serializable {
 
     private String employeeNIC;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+//    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Role employeeRoleId;
 
     private String employeeName;

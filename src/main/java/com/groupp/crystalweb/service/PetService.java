@@ -5,11 +5,13 @@ import com.groupp.crystalweb.entity.Pet;
 import com.groupp.crystalweb.repository.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @Slf4j
 public class PetService {
     private final PetRepository petRepository;
@@ -54,7 +56,7 @@ public class PetService {
     }
 
     public List<Pet> getAllPets() {
-        return (List<Pet>) petRepository.findAll();
+        return petRepository.findAll();
     }
 
     public long deletePet(String id) {

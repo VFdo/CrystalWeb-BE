@@ -3,12 +3,16 @@ package com.groupp.crystalweb.service;
 import com.groupp.crystalweb.dto.request.BillRequest;
 import com.groupp.crystalweb.entity.Bill;
 import com.groupp.crystalweb.repository.BillRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+@Slf4j
 public class BillService {
     private final BillRepository billRepository;
 

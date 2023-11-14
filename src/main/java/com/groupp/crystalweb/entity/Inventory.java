@@ -22,4 +22,8 @@ public class Inventory {
     private Integer rop;
     private Date expDate;
     private String supInfo;
+
+    public String getRefId() {
+        return refId;
+    }
 }

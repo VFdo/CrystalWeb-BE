@@ -22,6 +22,6 @@ public class PetStore {
     private float unitprice;
     private Integer productid;
     private byte[] photo;
-    private Status catergory;
+    private Catergory catergory;
 
 }

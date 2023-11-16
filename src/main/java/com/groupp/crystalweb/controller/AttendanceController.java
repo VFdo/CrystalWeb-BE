@@ -6,7 +6,7 @@ import com.groupp.crystalweb.service.AttendanceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
 public class AttendanceController {
     private final AttendanceService attendanceService;
 

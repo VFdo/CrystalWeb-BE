@@ -1,27 +1,28 @@
 package com.groupp.crystalweb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "client")
-public class Client {
-    @Id
-    private String refId;
+public class Client extends SerializableObject {
     private String name;
     private String nic;
     private String address;
-    private String phone;
+    @ElementCollection
+    @CollectionTable(name = "phone_numbers", joinColumns = @JoinColumn(name = "client_id"))
+    private List<String> phone;
     private String email;
     private String role;
-
 }
+
+
+// ------ CHANGES: ------
+//- phone changed to List

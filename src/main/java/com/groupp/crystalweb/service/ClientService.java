@@ -3,6 +3,7 @@ package com.groupp.crystalweb.service;
 import com.groupp.crystalweb.dto.request.ClientRequest;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.repository.ClientRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,27 +13,21 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 @Slf4j
 public class ClientService {
     private final ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository){
-        this.clientRepository = clientRepository;
-    }
-
-// creating a new client
+    // creating a new client
     public Client saveclient(ClientRequest clientRequest){
-        Client newClient = new Client(
-            "p" + clientRequest.refId(),
-            clientRequest.name(),
-            clientRequest.nic(),
-            clientRequest.address(),
-            clientRequest.phone(),
-            clientRequest.email(),
-            clientRequest.role()
-        );
+        Client newClient = new Client();
+        newClient.setName(clientRequest.name());
+        newClient.setNic(clientRequest.nic());
+        newClient.setAddress(clientRequest.address());
+        newClient.setPhone(clientRequest.phone());
+        newClient.setEmail(clientRequest.email());
+        newClient.setRole(clientRequest.role());
         return clientRepository.save(newClient);
-
     }
 
 // updating existing client
@@ -40,7 +35,6 @@ public class ClientService {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()){
             Client existingClient = client.get();
-
             existingClient.setName(clientRequest.name());
             existingClient.setNic(clientRequest.nic());
             existingClient.setAddress(clientRequest.address());
@@ -62,7 +56,7 @@ public class ClientService {
         return null;
     }
     public List<Client> getAllClients(){
-        return (List<Client>) clientRepository.findAll();
+        return clientRepository.findAll();
     }
 
     public long deleteClient(String id){

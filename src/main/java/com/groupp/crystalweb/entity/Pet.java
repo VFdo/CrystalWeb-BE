@@ -1,24 +1,23 @@
 package com.groupp.crystalweb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "pet")
-public class Pet {
-    @Id
-    private String refId;
+public class Pet extends SerializableObject{
     private String name;
-    private Date dob;
+    private LocalDate dob;
+//    TODO: not urgent : convert to ENUM
     private String typeOfAnimal;
     private byte[] photo;
+    @ManyToOne
+    private Client client;
 }

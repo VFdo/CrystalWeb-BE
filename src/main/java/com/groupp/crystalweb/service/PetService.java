@@ -1,8 +1,12 @@
 package com.groupp.crystalweb.service;
 
+import com.groupp.crystalweb.dto.request.ClientRequest;
 import com.groupp.crystalweb.dto.request.PetRequest;
+import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.entity.Pet;
+import com.groupp.crystalweb.repository.ClientRepository;
 import com.groupp.crystalweb.repository.PetRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,23 +16,23 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 @Slf4j
 public class PetService {
     private final PetRepository petRepository;
-
-    public PetService(PetRepository petRepository) {
-        this.petRepository = petRepository;
-    }
+    private final ClientRepository clientRepository;
 
 //    creating new pet
     public Pet savePet(PetRequest petRequest) {
-        Pet newPet = new Pet(
-                "P" + petRequest.refId(),
-                petRequest.name(),
-                petRequest.dob(),
-                petRequest.typeOfAnimal(),
-                petRequest.photo()
-        );
+        Optional<Client> client = clientRepository.findByRefId(petRequest.clientRefId());
+        Pet newPet = new Pet();
+        newPet.setName(petRequest.name());
+        newPet.setDob(petRequest.dob());
+        newPet.setTypeOfAnimal(petRequest.typeOfAnimal());
+        newPet.setPhoto(petRequest.photo());
+        if(client.isPresent()){
+            newPet.setClient(client.get());
+        }
         return petRepository.save(newPet);
     }
 

@@ -5,6 +5,7 @@ import com.groupp.crystalweb.dto.response.ApiResponse;
 import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class ClientController {
 
     //  save client
     @PostMapping("client")
-    public ResponseEntity<ApiResponse> saveClient(@RequestBody ClientRequest clientRequest){
+    public ResponseEntity<ApiResponse> saveClient(@Valid @RequestBody ClientRequest clientRequest){
         Client savedClient =  clientService.saveclient(clientRequest);
         ApiResponse response = new ApiResponse(
                 200,

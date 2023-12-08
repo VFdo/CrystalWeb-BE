@@ -1,10 +1,15 @@
 package com.groupp.crystalweb.service;
 
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.ClientRequest;
+import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +64,16 @@ public class ClientService {
         }
         return null;
     }
-    public List<Client> getAllClients(){
-        return clientRepository.findAll();
+    public Tuple<Object, Object> getAllClients(int pageNumber, int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Client> clientPage = clientRepository.findAll(pageable);
+        List<Client> clients = clientPage.getContent();
+        PageInfo pageInfo = new PageInfo(
+                clientPage.getNumber(),
+                clientPage.getSize(),
+                clientPage.getTotalElements(),
+                clientPage.getTotalPages());
+        return new Tuple<>(clients, pageInfo);
     }
 
     public long deleteClient(String id){

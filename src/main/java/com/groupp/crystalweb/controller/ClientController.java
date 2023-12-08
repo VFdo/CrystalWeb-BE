@@ -1,12 +1,12 @@
 package com.groupp.crystalweb.controller;
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.ClientRequest;
 import com.groupp.crystalweb.dto.response.ApiResponse;
+import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.service.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class ClientController {
@@ -18,9 +18,9 @@ public class ClientController {
 
     //  save client
     @PostMapping("client")
-    public ResponseEntity<ApiResponse<Client>> saveClient(@RequestBody ClientRequest clientRequest){
+    public ResponseEntity<ApiResponse> saveClient(@RequestBody ClientRequest clientRequest){
         Client savedClient =  clientService.saveclient(clientRequest);
-        ApiResponse<Client> response = new ApiResponse<>(
+        ApiResponse response = new ApiResponse(
                 200,
                 "Success",
                 savedClient
@@ -42,8 +42,17 @@ public class ClientController {
 
     //  get all clients
     @GetMapping("/client")
-    public List<Client> getClients(){
-        return clientService.getAllClients();
+    public ResponseEntity<ApiResponse> getClients(@RequestParam(defaultValue = "0") int pageNumber,
+                                                                @RequestParam(defaultValue = "10") int pageSize){
+
+        Tuple<Object, Object> allClients = clientService.getAllClients(pageNumber, pageSize);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                allClients.first(),
+                (PageInfo) allClients.second()
+        );
+        return ResponseEntity.ok(response);
     }
 
     //  delete client

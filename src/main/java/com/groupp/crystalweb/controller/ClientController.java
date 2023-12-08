@@ -1,7 +1,9 @@
 package com.groupp.crystalweb.controller;
 import com.groupp.crystalweb.dto.request.ClientRequest;
+import com.groupp.crystalweb.dto.response.ApiResponse;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.service.ClientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,14 @@ public class ClientController {
 
     //  save client
     @PostMapping("client")
-    public Client saveClient(@RequestBody ClientRequest clientRequest){
-        return clientService.saveclient(clientRequest);
+    public ResponseEntity<ApiResponse<Client>> saveClient(@RequestBody ClientRequest clientRequest){
+        Client savedClient =  clientService.saveclient(clientRequest);
+        ApiResponse<Client> response = new ApiResponse<>(
+                200,
+                "Success",
+                savedClient
+        );
+        return ResponseEntity.ok(response);
     }
 
     //  update client

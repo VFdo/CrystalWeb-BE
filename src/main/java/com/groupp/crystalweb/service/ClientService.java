@@ -20,14 +20,18 @@ public class ClientService {
 
     // creating a new client
     public Client saveclient(ClientRequest clientRequest){
-        Client newClient = new Client();
-        newClient.setName(clientRequest.name());
-        newClient.setNic(clientRequest.nic());
-        newClient.setAddress(clientRequest.address());
-        newClient.setPhone(clientRequest.phone());
-        newClient.setEmail(clientRequest.email());
-        newClient.setRole(clientRequest.role());
-        return clientRepository.save(newClient);
+        try{
+            Client newClient = new Client();
+            newClient.setName(clientRequest.name());
+            newClient.setNic(clientRequest.nic());
+            newClient.setAddress(clientRequest.address());
+            newClient.setPhone(clientRequest.phone());
+            newClient.setEmail(clientRequest.email());
+            newClient.setRole(clientRequest.role());
+            return clientRepository.save(newClient);
+        } catch (Exception e){
+            throw new RuntimeException("Something went wrong!");
+        }
     }
 
 // updating existing client

@@ -3,22 +3,22 @@ package com.groupp.crystalweb.dto.response;
 import lombok.Data;
 
 @Data
-public class ApiResponse<T> {
+public class ApiResponse {
     private int status;
     private String message;
-    private int totalElements;
-    private T payload;
+    private PageInfo pageInfo;
+    private Object payload;
 
-    public ApiResponse(int status, String message, T payload) {
+    public ApiResponse(int status, String message, Object payload) {
         this.status = status;
         this.message = message;
         this.payload = payload;
     }
 
-    public ApiResponse(int status, String message, T payload, int totalElements) {
+    public ApiResponse(int status, String message, Object payload, PageInfo pageInfo) {
         this.status = status;
         this.message = message;
         this.payload = payload;
-        this.totalElements = totalElements;
+        this.pageInfo = pageInfo;
     }
 }

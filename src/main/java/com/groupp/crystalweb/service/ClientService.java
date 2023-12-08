@@ -25,6 +25,7 @@ public class ClientService {
 
     // creating a new client
     public Client saveclient(ClientRequest clientRequest){
+        log.info("client save request received");
         try{
             Client newClient = new Client();
             newClient.setName(clientRequest.name());
@@ -32,9 +33,9 @@ public class ClientService {
             newClient.setAddress(clientRequest.address());
             newClient.setPhone(clientRequest.phone());
             newClient.setEmail(clientRequest.email());
-            newClient.setRole(clientRequest.role());
             return clientRepository.save(newClient);
         } catch (Exception e){
+            log.info("client saving failed: {}", e.getMessage());
             throw new RuntimeException("Something went wrong!");
         }
     }
@@ -49,8 +50,6 @@ public class ClientService {
             existingClient.setAddress(clientRequest.address());
             existingClient.setPhone(clientRequest.phone());
             existingClient.setEmail(clientRequest.email());
-            existingClient.setRole(clientRequest.role());
-
             return clientRepository.save(existingClient);
         } else{
             log.info("client not found for id: p{}",clientRequest.refId());

@@ -13,17 +13,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "inventory")
-public class Inventory {
+@Table(name = "petstore")
+public class PetStore {
     @Id
     private String refId;
     private String name;
-    private Integer avaQuantity;
-    private Integer rop;
-    private Date expDate;
-    private String supInfo;
+    private String description;
+    private float unitprice;
+    private Integer productid;
+    private byte[] photo;
+    private Catergory catergory;
 
-    public String getRefId() {
-        return refId;
-    }
 }

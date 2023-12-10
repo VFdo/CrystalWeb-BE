@@ -4,26 +4,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "inventory")
-public class Inventory {
+@Builder
+@Table(name = "order")
+public class Order {
     @Id
     private String refId;
-    private String name;
-    private Integer avaQuantity;
-    private Integer rop;
-    private Date expDate;
-    private String supInfo;
+    private String clientRefId;
+    private float totalPrice;
+    private Orderstatus orderStatus;
+    private String notes;
 
-    public String getRefId() {
-        return refId;
-    }
 }
+

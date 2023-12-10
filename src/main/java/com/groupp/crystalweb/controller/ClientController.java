@@ -31,21 +31,32 @@ public class ClientController {
 
     //  update client
     @PutMapping("client/{id}")
-    public Client updateClient(@PathVariable String id, @RequestBody ClientRequest clientRequest){
-        return clientService.updateClient(id, clientRequest);
+    public ResponseEntity<ApiResponse> updateClient(@PathVariable String id, @RequestBody ClientRequest clientRequest){
+        Client updatedClient = clientService.updateClient(id, clientRequest);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                updatedClient
+        );
+        return ResponseEntity.ok(response);
     }
 
     //  find client by id
     @GetMapping("client/{id}")
-    public Client findClient(@PathVariable String id){
-        return clientService.getClient(id);
+    public ResponseEntity<ApiResponse> findClient(@PathVariable String id){
+        Client existingClient = clientService.getClient(id);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                existingClient
+        );
+        return ResponseEntity.ok(response);
     }
 
     //  get all clients
     @GetMapping("/client")
     public ResponseEntity<ApiResponse> getClients(@RequestParam(defaultValue = "0") int pageNumber,
-                                                                @RequestParam(defaultValue = "10") int pageSize){
-
+                                                  @RequestParam(defaultValue = "10") int pageSize){
         Tuple<Object, Object> allClients = clientService.getAllClients(pageNumber, pageSize);
         ApiResponse response = new ApiResponse(
                 200,
@@ -58,13 +69,16 @@ public class ClientController {
 
     //  delete client
     @DeleteMapping("client/delete/{id}")
-    public String deleteClient(@PathVariable String id){
+    public ResponseEntity<ApiResponse> deleteClient(@PathVariable String id){
         long deleted = clientService.deleteClient(id);
+        ApiResponse response = new ApiResponse();
+        response.setStatus(200);
+        response.setMessage("Success");
         if(deleted !=0){
-            return ("client deleted successfully");
+            response.setPayload("Client deleted successfully");
+        } else {
+            response.setPayload("Client not found");
         }
-        return "Client not found!";
+        return ResponseEntity.ok(response);
     }
-
-
 }

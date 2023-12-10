@@ -7,15 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Demo {
+@Table(name = "petstore")
+public class PetStore {
     @Id
     private String refId;
-    private String demoString;
-    private int demoInt;
-    private Boolean demoBool;
-//    private List<String> demoList;
+    private String name;
+    private String description;
+    private float unitprice;
+    private Integer productid;
+    private byte[] photo;
+    private Catergory catergory;
+
 }

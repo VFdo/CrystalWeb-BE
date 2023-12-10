@@ -7,15 +7,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Demo {
+@Table(name = "inventory")
+public class Inventory {
     @Id
     private String refId;
-    private String demoString;
-    private int demoInt;
-    private Boolean demoBool;
-//    private List<String> demoList;
+    private String name;
+    private Integer avaQuantity;
+    private Integer rop;
+    private Date expDate;
+    private String supInfo;
+
+    public String getRefId() {
+        return refId;
+    }
 }

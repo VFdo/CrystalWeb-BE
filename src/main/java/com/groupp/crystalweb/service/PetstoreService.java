@@ -27,7 +27,8 @@ public class PetstoreService {
                         petstoreRequest.unitprice(),
                         petstoreRequest.productid(),
                         petstoreRequest.photo(),
-                        petstoreRequest.catergory()
+//                        petstoreRequest.catergory()
+                null
                 );
         return petstoreRepository.save(newPetstore);
     }
@@ -42,7 +43,7 @@ public class PetstoreService {
             existingItem.setUnitprice(petstoreRequest.unitprice());
             existingItem.setProductid(petstoreRequest.productid());
             existingItem.setPhoto(petstoreRequest.photo());
-            existingItem.setCatergory(petstoreRequest.catergory());
+//            existingItem.setCatergory(petstoreRequest.catergory());
             return petstoreRepository.save(existingItem);
         } else {
             log.info("Item not found for id: I{}", petstoreRequest.refId());

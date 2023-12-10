@@ -45,7 +45,7 @@ public class OrderController {
     }
 
     //    delete by id
-    @DeleteMapping("user/delete/{refId}")
+    @DeleteMapping("order/delete/{refId}")
     public String deleteOrder(@PathVariable String refId){
         long deleted = orderService.deleteOrder(refId);
         if(deleted != 0){

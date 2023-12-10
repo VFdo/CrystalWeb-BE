@@ -1,8 +1,10 @@
 package com.groupp.crystalweb.dto.response;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ApiResponse {
     private int status;
     private String message;

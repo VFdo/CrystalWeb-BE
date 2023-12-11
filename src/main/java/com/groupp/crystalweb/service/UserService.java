@@ -35,7 +35,7 @@ public class UserService {
             newUser.setRole(userRequest.role());
             return userRepository.save(newUser);
         }catch (Exception e){
-            log.info("User saving failed: {},{}",e.getMessage(),userRequest.userId());
+            log.info("User saving failed: {},{}",e.getMessage());
             throw new RuntimeException("Error");
         }
 
@@ -71,7 +71,7 @@ public class UserService {
 
             return userRepository.save(existingUser);
         }
-        log.info("User not found for id: P{}", userRequest.userId());
+        log.info("User not found for id: P{}",userId);
         return null;
     }
 

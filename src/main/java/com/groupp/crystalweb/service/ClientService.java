@@ -1,36 +1,43 @@
 package com.groupp.crystalweb.service;
 
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.ClientRequest;
+import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.repository.ClientRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 @Slf4j
 public class ClientService {
     private final ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository){
-        this.clientRepository = clientRepository;
-    }
-
-// creating a new client
+    // creating a new client
     public Client saveclient(ClientRequest clientRequest){
-        Client newClient = new Client(
-            "p" + clientRequest.refId(),
-            clientRequest.name(),
-            clientRequest.nic(),
-            clientRequest.address(),
-            clientRequest.phone(),
-            clientRequest.email(),
-            clientRequest.role()
-        );
-        return clientRepository.save(newClient);
-
+        log.info("client save request received");
+        try{
+            Client newClient = new Client();
+            newClient.setName(clientRequest.name());
+            newClient.setNic(clientRequest.nic());
+            newClient.setAddress(clientRequest.address());
+            newClient.setPhone(clientRequest.phone());
+            newClient.setEmail(clientRequest.email());
+            return clientRepository.save(newClient);
+        } catch (Exception e){
+            log.info("client saving failed: {}, {}", e.getMessage(), clientRequest.refId());
+            throw new RuntimeException("Something went wrong!");
+        }
     }
 
 // updating existing client
@@ -38,14 +45,11 @@ public class ClientService {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()){
             Client existingClient = client.get();
-
             existingClient.setName(clientRequest.name());
             existingClient.setNic(clientRequest.nic());
             existingClient.setAddress(clientRequest.address());
             existingClient.setPhone(clientRequest.phone());
             existingClient.setEmail(clientRequest.email());
-            existingClient.setRole(clientRequest.role());
-
             return clientRepository.save(existingClient);
         } else{
             log.info("client not found for id: p{}",clientRequest.refId());
@@ -59,8 +63,16 @@ public class ClientService {
         }
         return null;
     }
-    public List<Client> getAllClients(){
-        return (List<Client>) clientRepository.findAll();
+    public Tuple<Object, Object> getAllClients(int pageNumber, int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Client> clientPage = clientRepository.findAll(pageable);
+        List<Client> clients = clientPage.getContent();
+        PageInfo pageInfo = new PageInfo(
+                clientPage.getNumber(),
+                clientPage.getSize(),
+                clientPage.getTotalElements(),
+                clientPage.getTotalPages());
+        return new Tuple<>(clients, pageInfo);
     }
 
     public long deleteClient(String id){

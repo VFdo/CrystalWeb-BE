@@ -2,6 +2,9 @@ package com.groupp.crystalweb.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,48 +17,60 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee implements Serializable {
+@Table(name = "employee")
+public class Employee extends SerializableObject {
 
-    @Id
-    private String refId;
-
+    @NotBlank(message = "Employee NIC Number is required")
     private String employeeNIC;
 
 //    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @NotBlank(message = "Employee Role ID is required")
     private Role employeeRoleId;
 
+    @NotBlank(message = "Employee Name is required")
     private String employeeName;
 
     private Integer employeeAge;
+
 
     public enum Gender{
         MALE,
         FEMALE;
     }
 
+    @NotBlank(message = "Employee Gender is required")
     private Gender employeeGender;
 
-    @Transient
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "phone_numbers", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeePhoneList;
 
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Employee Email is required")
     private String employeeEmail;
 
+    @NotBlank(message = "Employee Address is required")
     private String employeeAddress;
 
+    @NotBlank(message = "Employee Basic Salary is required")
     private float employeeBasicSalary;
 
+    @NotBlank(message = "Daily Hours Count is required")
     private Integer employeeRequiredDailyHours;
 
-    @Transient
+    @Size(min = 0)
+    @ElementCollection
+    @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeeSkillList;
 
-    public String getRefId() {
-        return refId;
-    }
+//    public String getRefId() {
+//        return refId;
+//    }
 
-    public void setRefId(String refId) {
-        this.refId = refId;
-    }
+//    public void setRefId(String refId) {
+//        this.refId = refId;
+//    }
     public String getEmployeeNIC() {
         return employeeNIC;
     }

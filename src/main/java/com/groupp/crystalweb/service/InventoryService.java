@@ -1,5 +1,10 @@
 package com.groupp.crystalweb.service;
 
+import com.groupp.crystalweb.common.Tuple;
+import com.groupp.crystalweb.dto.response.PageInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import com.groupp.crystalweb.dto.request.InventoryRequest;
 import com.groupp.crystalweb.entity.Inventory;
 import com.groupp.crystalweb.repository.InventoryRepository;
@@ -23,21 +28,25 @@ public class InventoryService {
 
 //    creating new inventory
     public Inventory saveInventory(InventoryRequest inventoryRequest) {
-        Inventory newInventory = new Inventory(
-                "I" + inventoryRequest.refId(),
-                inventoryRequest.name(),
-                inventoryRequest.avaQuantity(),
-                inventoryRequest.rop(),
-                inventoryRequest.expDate(),
-                inventoryRequest.supInfo()
-        );
-        return inventoryRepository.save(newInventory);
+        log.info("inventory save request received");
+        try{
+            Inventory newInventory = new Inventory();
+            newInventory.setName(inventoryRequest.name());
+            newInventory.setAvaQuantity(inventoryRequest.avaQuantity());
+            newInventory.setRop(inventoryRequest.rop());
+            newInventory.setExpDate(inventoryRequest.expDate());
+            newInventory.setSupInfo(inventoryRequest.supInfo());
+            return inventoryRepository.save(newInventory);
+        } catch (Exception e){
+            log.info("inventory saving failed: {}, {}", e.getMessage(), inventoryRequest.refId());
+            throw new RuntimeException("Something went wrong!");
+        }
     }
 
 //    updating existing inventory
-    public Inventory update(String id, InventoryRequest inventoryRequest) {
+    public Inventory updateInventory(String id, InventoryRequest inventoryRequest){
         Optional<Inventory> inventory = inventoryRepository.findById(id);
-        if(inventory.isPresent()){
+        if (inventory.isPresent()){
             Inventory existingInventory = inventory.get();
             existingInventory.setName(inventoryRequest.name());
             existingInventory.setAvaQuantity(inventoryRequest.avaQuantity());
@@ -50,6 +59,7 @@ public class InventoryService {
             return null;
         }
     }
+
     public Inventory getInventory(String id) {
         Optional<Inventory> inventory = inventoryRepository.findByRefId(id);
         if(inventory.isPresent()){
@@ -58,8 +68,16 @@ public class InventoryService {
         return null;
     }
 
-    public List<Inventory> getAllInventorys() {
-        return (List<Inventory>) inventoryRepository.findAll();
+    public Tuple<Object, Object> getAllInventorys(int pageNumber, int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Inventory> inventoryPage = inventoryRepository.findAll(pageable);
+        List<Inventory> inventorys = inventoryPage.getContent();
+        PageInfo pageInfo = new PageInfo(
+                inventoryPage.getNumber(),
+                inventoryPage.getSize(),
+                inventoryPage.getTotalElements(),
+                inventoryPage.getTotalPages());
+        return new Tuple<>(inventorys, pageInfo);
     }
 
     public long deleteInventory(String id) {

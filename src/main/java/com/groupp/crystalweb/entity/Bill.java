@@ -1,8 +1,8 @@
 package com.groupp.crystalweb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,19 +14,31 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Bill {
-    @Id
-    private String refId;
+@Table(name = "bill")
+public class Bill extends SerializableObject {
+
+    @NotBlank(message = "Bill Created Date is required")
     private Date dateTime;
+
+    @NotBlank(message = "Client ID is required")
     private String clientRefId;
+
+    @NotBlank(message = "Employee ID is required")
     private String employeeRefId;
 
-    @Transient
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "item-list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> itemsList;
 
-    @Transient
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "service_list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> servicesList;
+
     private Float additionalCharge;
+
+    @NotBlank(message = "Total Price is required")
     private Float totalPrice;
 
     public enum PaymentType{
@@ -35,6 +47,7 @@ public class Bill {
         OTHER;
     }
 
+    @NotBlank(message = "Payment Type is required")
     private PaymentType paymentType;
 
     public enum Status{
@@ -43,13 +56,10 @@ public class Bill {
         DELETE;
     }
 
+    @NotBlank(message = "Status is required")
     private Status status;
 
     private String notes;
-
-    public String getRefId() {
-        return refId;
-    }
 
     public PaymentType getPaymentType() {
         return paymentType;
@@ -65,10 +75,6 @@ public class Bill {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public void setRefId(String refId) {
-        this.refId = refId;
     }
 
     public Date getDateTime() {

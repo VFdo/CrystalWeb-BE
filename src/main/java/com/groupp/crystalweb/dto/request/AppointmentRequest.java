@@ -4,10 +4,12 @@ import com.groupp.crystalweb.entity.Status;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record AppointmentRequest (
 
-        LocalDateTime date,
+        LocalDate date,
+        LocalTime time,
         String clientRefId,
         String employeeRefId,
         String billRefId,

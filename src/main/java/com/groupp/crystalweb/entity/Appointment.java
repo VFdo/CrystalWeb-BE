@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +21,10 @@ import java.time.LocalDateTime;
 public class Appointment extends SerializableObject {
 
     @NotNull(message = "Check in time is Required")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime date;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime time;
     @ManyToOne
     private Client client;
     @ManyToOne

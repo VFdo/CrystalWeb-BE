@@ -1,12 +1,14 @@
 package com.groupp.crystalweb.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.groupp.crystalweb.common.DateFormats;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serializable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -14,48 +16,48 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee implements Serializable {
+@Table(name = "employee")
+public class Employee extends SerializableObject {
 
-    @Id
-    private String refId;
-
+    @NotBlank(message = "Employee NIC Number is required")
     private String employeeNIC;
 
 //    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @NotNull(message = "Employee Role ID is required")
     private Role employeeRoleId;
 
+    @NotBlank(message = "Employee Name is required")
     private String employeeName;
 
-    private Integer employeeAge;
+    @JsonFormat(pattern=DateFormats.LOCAL_DATE)
+    private LocalDate employeeDob;
 
-    public enum Gender{
-        MALE,
-        FEMALE;
-    }
-
+    @NotNull(message = "Employee Gender is required")
     private Gender employeeGender;
 
-    @Transient
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "employee_phone_numbers", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeePhoneList;
 
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Employee Email is required")
     private String employeeEmail;
 
+    @NotBlank(message = "Employee Address is required")
     private String employeeAddress;
 
+    @NotNull(message = "Employee Basic Salary is required")
     private float employeeBasicSalary;
 
+    @NotNull(message = "Daily Hours Count is required")
     private Integer employeeRequiredDailyHours;
 
-    @Transient
+    @Size(min = 0)
+    @ElementCollection
+    @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeeSkillList;
 
-    public String getRefId() {
-        return refId;
-    }
-
-    public void setRefId(String refId) {
-        this.refId = refId;
-    }
     public String getEmployeeNIC() {
         return employeeNIC;
     }
@@ -80,12 +82,12 @@ public class Employee implements Serializable {
         this.employeeName = employeeName;
     }
 
-    public Integer getEmployeeAge() {
-        return employeeAge;
+    public LocalDate getEmployeeDob() {
+        return employeeDob;
     }
 
-    public void setEmployeeAge(Integer employeeAge) {
-        this.employeeAge = employeeAge;
+    public void setEmployeeAge(LocalDate employeeDob) {
+        this.employeeDob = employeeDob;
     }
 
     public Gender getEmployeeGender() {
@@ -147,5 +149,4 @@ public class Employee implements Serializable {
 
 
 
-//    private List<String> employeeList;
 }

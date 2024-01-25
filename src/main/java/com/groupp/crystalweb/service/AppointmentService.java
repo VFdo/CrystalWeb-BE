@@ -36,7 +36,6 @@ public class AppointmentService {
             Optional<Bill> bill = billRepository.findByRefId(appointmentRequest.billRefId());
             Optional<Pet> pet = petRepository.findById(appointmentRequest.petRefId());
             newAppointment.setDate(appointmentRequest.date());
-            newAppointment.setTime(appointmentRequest.time());
             newAppointment.setStatus(appointmentRequest.status());
             newAppointment.setNotes(appointmentRequest.notes());
             if(employee.isPresent()){
@@ -85,7 +84,6 @@ public class AppointmentService {
         if(appointment.isPresent()){
             Appointment existingAppointment = appointment.get();
             existingAppointment.setDate(appointmentRequest.date());
-            existingAppointment.setTime(appointmentRequest.time());
             existingAppointment.setStatus(appointmentRequest.status());
             existingAppointment.setNotes(appointmentRequest.notes());
             return appointmentRepository.save(existingAppointment);

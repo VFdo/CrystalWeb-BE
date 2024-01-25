@@ -22,10 +22,27 @@ public class Inventory extends SerializableObject{
     @NotBlank(message = "Item name is required")
     private String name;
 
+    @NotNull(message = "Category is required")
+    private Category category;
+
+//    TODO: convert to ENUM - not urgent
+    private String unitOfMeasure;
+
     @NotNull(message = "Available Quantity is required")
     private Integer avaQuantity;
 
     private Integer rop;
+
+    @NotNull(message = "Unit Price is required")
+    private Float unitPrice;
+
+    public enum InventoryStatus {
+        AVAILABLE,
+        UNAVAILABLE
+    }
+
+    @NotNull
+    private InventoryStatus status;
 
     @NotNull(message = "Expire Date is required")
     @JsonFormat(pattern = DateFormats.LOCAL_DATE)

@@ -36,8 +36,12 @@ public class InventoryService {
             Inventory newInventory = new Inventory();
             Supplier newSupplier = new Supplier();
             newInventory.setName(inventoryRequest.name());
+            newInventory.setCategory(inventoryRequest.category());
+            newInventory.setUnitOfMeasure(inventoryRequest.unitOfMeasure());
             newInventory.setAvaQuantity(inventoryRequest.avaQuantity());
             newInventory.setRop(inventoryRequest.rop());
+            newInventory.setUnitPrice(inventoryRequest.unitPrice());
+            newInventory.setStatus(inventoryRequest.status());
             newInventory.setExpDate(inventoryRequest.expDate());
 
             newSupplier.setName(inventoryRequest.supplierName());

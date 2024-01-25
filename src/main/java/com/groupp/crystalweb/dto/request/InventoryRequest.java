@@ -1,13 +1,16 @@
 package com.groupp.crystalweb.dto.request;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 public record InventoryRequest(
-        String refId,
         String name,
         Integer avaQuantity,
         Integer rop,
-        Date expDate,
-        String supInfo
+        LocalDate expDate,
+        String supplierName,
+        List<String> supplierPhone,
+        String supplierEmail,
+        String supplierNotes
 ) {
 }

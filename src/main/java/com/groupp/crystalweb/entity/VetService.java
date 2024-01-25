@@ -7,15 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Demo {
+@Table(name = "vetService")
+public class VetService {
     @Id
     private String refId;
-    private String demoString;
-    private int demoInt;
-    private Boolean demoBool;
-//    private List<String> demoList;
+    private String name;
+    private Float avgTime;
+    private Float amount;
 }

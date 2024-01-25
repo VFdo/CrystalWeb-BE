@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment,String> {
-    Optional<Appointment> findByRefId(String appointmentRefId);
-    long deleteByRefId(String appointmentRefId);
+    Optional<Appointment> findByRefId(String refId);
+    long deleteByRefId(String refId);
 }

@@ -1,14 +1,17 @@
 package com.groupp.crystalweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.groupp.crystalweb.common.DateFormats;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -16,22 +19,19 @@ import java.util.Date;
 @Entity
 @Table(name = "inventory")
 public class Inventory extends SerializableObject{
-
     @NotBlank(message = "Item name is required")
     private String name;
 
-    @NotBlank(message = "Available Quantity is required")
+    @NotNull(message = "Available Quantity is required")
     private Integer avaQuantity;
 
     private Integer rop;
 
-    @NotBlank(message = "Expire Date is required")
-    private Date expDate;
+    @NotNull(message = "Expire Date is required")
+    @JsonFormat(pattern = DateFormats.LOCAL_DATE)
+    private LocalDate expDate;
 
-    @NotBlank(message = "Supplier Information is required")
-    private String supInfo;
-
-//    public String getRefId() {
-//        return refId;
-//    }
+    @NotNull(message = "Supplier Information is required")
+    @ManyToOne
+    private Supplier supInfo;
 }

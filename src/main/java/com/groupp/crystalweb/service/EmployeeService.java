@@ -35,7 +35,7 @@ public class EmployeeService {
             newEmployee.setEmployeeNIC(employeeRequest.employeeNIC());
             newEmployee.setEmployeeRoleId(employeeRequest.employeeRoleId());
             newEmployee.setEmployeeName(employeeRequest.employeeName());
-            newEmployee.setEmployeeAge(employeeRequest.employeeAge());
+            newEmployee.setEmployeeAge(employeeRequest.employeeDob());
             newEmployee.setEmployeeGender(employeeRequest.employeeGender());
             newEmployee.setEmployeePhoneList(employeeRequest.employeePhoneList());
             newEmployee.setEmployeeEmail(employeeRequest.employeeEmail());
@@ -45,7 +45,7 @@ public class EmployeeService {
             newEmployee.setEmployeeSkillList(employeeRequest.employeeSkillList());
             return employeeRepository.save(newEmployee);
         } catch (Exception e) {
-            log.info("employee saving failed: {}, {}", e.getMessage(), employeeRequest.refId());
+            log.info("employee saving failed: {}", e.getMessage());
             throw new RuntimeException("Something went wrong!");
         }
     }
@@ -79,7 +79,7 @@ public class EmployeeService {
             existingEmployee.setEmployeeNIC(employeeRequest.employeeNIC());
             existingEmployee.setEmployeeRoleId(employeeRequest.employeeRoleId());
             existingEmployee.setEmployeeName(employeeRequest.employeeName());
-            existingEmployee.setEmployeeAge(employeeRequest.employeeAge());
+            existingEmployee.setEmployeeAge(employeeRequest.employeeDob());
             existingEmployee.setEmployeeGender(employeeRequest.employeeGender());
             existingEmployee.setEmployeePhoneList(employeeRequest.employeePhoneList());
             existingEmployee.setEmployeeEmail(employeeRequest.employeeEmail());
@@ -89,7 +89,7 @@ public class EmployeeService {
             existingEmployee.setEmployeeSkillList(employeeRequest.employeeSkillList());
             return employeeRepository.save(existingEmployee);
         }else{
-            log.info("employee not found for id: p{}",employeeRequest.refId());
+            log.info("employee not found for id: {}",id);
             return null;
         }
     }

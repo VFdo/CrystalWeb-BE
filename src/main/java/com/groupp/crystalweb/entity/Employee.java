@@ -1,15 +1,14 @@
 package com.groupp.crystalweb.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.groupp.crystalweb.common.DateFormats;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serializable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,26 +23,21 @@ public class Employee extends SerializableObject {
     private String employeeNIC;
 
 //    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @NotBlank(message = "Employee Role ID is required")
+    @NotNull(message = "Employee Role ID is required")
     private Role employeeRoleId;
 
     @NotBlank(message = "Employee Name is required")
     private String employeeName;
 
-    private Integer employeeAge;
+    @JsonFormat(pattern=DateFormats.LOCAL_DATE)
+    private LocalDate employeeDob;
 
-
-    public enum Gender{
-        MALE,
-        FEMALE;
-    }
-
-    @NotBlank(message = "Employee Gender is required")
+    @NotNull(message = "Employee Gender is required")
     private Gender employeeGender;
 
     @Size(min = 1)
     @ElementCollection
-    @CollectionTable(name = "phone_numbers", joinColumns = @JoinColumn(name = "employee_id"))
+    @CollectionTable(name = "employee_phone_numbers", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeePhoneList;
 
     @Email(message = "Invalid email format")
@@ -53,10 +47,10 @@ public class Employee extends SerializableObject {
     @NotBlank(message = "Employee Address is required")
     private String employeeAddress;
 
-    @NotBlank(message = "Employee Basic Salary is required")
+    @NotNull(message = "Employee Basic Salary is required")
     private float employeeBasicSalary;
 
-    @NotBlank(message = "Daily Hours Count is required")
+    @NotNull(message = "Daily Hours Count is required")
     private Integer employeeRequiredDailyHours;
 
     @Size(min = 0)
@@ -64,13 +58,6 @@ public class Employee extends SerializableObject {
     @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeeSkillList;
 
-//    public String getRefId() {
-//        return refId;
-//    }
-
-//    public void setRefId(String refId) {
-//        this.refId = refId;
-//    }
     public String getEmployeeNIC() {
         return employeeNIC;
     }
@@ -95,12 +82,12 @@ public class Employee extends SerializableObject {
         this.employeeName = employeeName;
     }
 
-    public Integer getEmployeeAge() {
-        return employeeAge;
+    public LocalDate getEmployeeDob() {
+        return employeeDob;
     }
 
-    public void setEmployeeAge(Integer employeeAge) {
-        this.employeeAge = employeeAge;
+    public void setEmployeeAge(LocalDate employeeDob) {
+        this.employeeDob = employeeDob;
     }
 
     public Gender getEmployeeGender() {
@@ -162,5 +149,4 @@ public class Employee extends SerializableObject {
 
 
 
-//    private List<String> employeeList;
 }

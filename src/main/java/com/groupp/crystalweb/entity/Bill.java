@@ -1,13 +1,17 @@
 package com.groupp.crystalweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.groupp.crystalweb.common.DateFormats;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,28 +21,43 @@ import java.util.List;
 @Table(name = "bill")
 public class Bill extends SerializableObject {
 
-    @NotBlank(message = "Bill Created Date is required")
-    private Date dateTime;
+    @NotNull(message = "Bill Created Date is required")
+    @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
+    private LocalDateTime dateTime;
 
-    @NotBlank(message = "Client ID is required")
-    private String clientRefId;
+    @NotNull(message = "Client ID is required")
+    @ManyToOne
+    @JsonIgnore
+    private Client clientRefId;
 
-    @NotBlank(message = "Employee ID is required")
-    private String employeeRefId;
+    @JsonProperty("clientId")
+    public String getClientId() {
+        return (clientRefId != null) ? clientRefId.getRefId() : null;
+    }
+
+    @NotNull(message = "Employee ID is required")
+    @ManyToOne
+    @JsonIgnore
+    private Employee employeeRefId;
+
+    @JsonProperty("employeeId")
+    public String getEmployeeId() {
+        return (employeeRefId != null) ? employeeRefId.getRefId() : null;
+    }
 
     @Size(min = 1)
     @ElementCollection
-    @CollectionTable(name = "item-list", joinColumns = @JoinColumn(name = "bill_id"))
+    @CollectionTable(name = "bill_item_list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> itemsList;
 
     @Size(min = 1)
     @ElementCollection
-    @CollectionTable(name = "service_list", joinColumns = @JoinColumn(name = "bill_id"))
+    @CollectionTable(name = "Bill_service_list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> servicesList;
 
     private Float additionalCharge;
 
-    @NotBlank(message = "Total Price is required")
+    @NotNull(message = "Total Price is required")
     private Float totalPrice;
 
     public enum PaymentType{
@@ -47,7 +66,7 @@ public class Bill extends SerializableObject {
         OTHER;
     }
 
-    @NotBlank(message = "Payment Type is required")
+    @NotNull(message = "Payment Type is required")
     private PaymentType paymentType;
 
     public enum Status{
@@ -56,7 +75,7 @@ public class Bill extends SerializableObject {
         DELETE;
     }
 
-    @NotBlank(message = "Status is required")
+    @NotNull(message = "Status is required")
     private Status status;
 
     private String notes;
@@ -77,28 +96,12 @@ public class Bill extends SerializableObject {
         this.status = status;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public String getClientRefId() {
-        return clientRefId;
-    }
-
-    public void setClientRefId(String clientRefId) {
-        this.clientRefId = clientRefId;
-    }
-
-    public String getEmployeeRefId() {
-        return employeeRefId;
-    }
-
-    public void setEmployeeRefId(String employeeRefId) {
-        this.employeeRefId = employeeRefId;
     }
 
     public List<String> getItemsList() {
@@ -141,5 +144,4 @@ public class Bill extends SerializableObject {
         this.notes = notes;
     }
 
-    //    private List<String> billList;
 }

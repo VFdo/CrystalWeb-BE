@@ -98,7 +98,16 @@ public class EmployeeService {
         return employeeRepository.deleteByRefId(id);
     }
 
-    /*public float calculateSalary(){
-        return
-    }*/
+
+//    public float calculateSalary(integer OverTimeHours,float HourlyPayment, float employeeBasicSalary){
+//        return(
+//        if ( (0 <= overTimeHours) && (employeeBasicSalary != "" ))
+//        {
+//            overTimePayment = ( (overTimeHours) * (HourlyPayment) ).toFixed(2);
+//            totalSalary = employeeBasicSalary + overTimePayment;
+//        }
+//
+//    }
+
+
 }

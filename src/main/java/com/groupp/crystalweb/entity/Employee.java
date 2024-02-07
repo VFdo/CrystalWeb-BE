@@ -53,6 +53,9 @@ public class Employee extends SerializableObject {
     @NotNull(message = "Daily Hours Count is required")
     private Integer employeeRequiredDailyHours;
 
+    @NotNull(message = "Daily Hourly Pay is required")
+    private float employeeHourlyPay;
+
     @Size(min = 0)
     @ElementCollection
     @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))

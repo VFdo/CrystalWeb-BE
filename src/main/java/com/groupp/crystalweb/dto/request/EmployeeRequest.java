@@ -17,6 +17,9 @@ public record EmployeeRequest(
         String employeeAddress,
         float employeeBasicSalary,
         Integer employeeRequiredDailyHours,
+
+        float employeeHourlyPay,
+
         List<String> employeeSkillList
 //        List<String>demoList
 ){

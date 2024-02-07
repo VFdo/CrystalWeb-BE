@@ -3,7 +3,6 @@ package com.groupp.crystalweb.service;
 import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.EmployeeRequest;
 import com.groupp.crystalweb.dto.response.PageInfo;
-import com.groupp.crystalweb.entity.Client;
 import com.groupp.crystalweb.entity.Employee;
 import com.groupp.crystalweb.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +41,7 @@ public class EmployeeService {
             newEmployee.setEmployeeAddress(employeeRequest.employeeAddress());
             newEmployee.setEmployeeBasicSalary(employeeRequest.employeeBasicSalary());
             newEmployee.setEmployeeRequiredDailyHours(employeeRequest.employeeRequiredDailyHours());
+            newEmployee.setEmployeeHourlyPay(employeeRequest.employeeHourlyPay());
             newEmployee.setEmployeeSkillList(employeeRequest.employeeSkillList());
             return employeeRepository.save(newEmployee);
         } catch (Exception e) {
@@ -86,6 +86,7 @@ public class EmployeeService {
             existingEmployee.setEmployeeAddress(employeeRequest.employeeAddress());
             existingEmployee.setEmployeeBasicSalary(employeeRequest.employeeBasicSalary());
             existingEmployee.setEmployeeRequiredDailyHours(employeeRequest.employeeRequiredDailyHours());
+            existingEmployee.setEmployeeHourlyPay(employeeRequest.employeeHourlyPay());
             existingEmployee.setEmployeeSkillList(employeeRequest.employeeSkillList());
             return employeeRepository.save(existingEmployee);
         }else{
@@ -99,15 +100,22 @@ public class EmployeeService {
     }
 
 
-//    public float calculateSalary(integer OverTimeHours,float HourlyPayment, float employeeBasicSalary){
-//        return(
-//        if ( (0 <= overTimeHours) && (employeeBasicSalary != "" ))
-//        {
-//            overTimePayment = ( (overTimeHours) * (HourlyPayment) ).toFixed(2);
-//            totalSalary = employeeBasicSalary + overTimePayment;
-//        }
-//
-//    }
+    public float calculateSalary(float employeeOTimeHours ,float employeeHourlyPay, float employeeBasicSalary){
+        float overTimePayment = 0;
+        float totalSalary = 0;
+        try {
+            if ((0 <= employeeOTimeHours) && (employeeBasicSalary != 0)) {
+                overTimePayment = ((employeeOTimeHours) * (employeeHourlyPay));
+                totalSalary = employeeBasicSalary + overTimePayment;
+            }
+
+            return totalSalary;
+        }
+        catch (Exception e) {
+            log.info("Salary calculation failed: {}", e.getMessage());
+            throw new RuntimeException("Something went wrong!");
+        }
+    }
 
 
 }

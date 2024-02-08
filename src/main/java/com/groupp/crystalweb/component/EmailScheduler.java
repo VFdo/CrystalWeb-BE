@@ -2,6 +2,7 @@ package com.groupp.crystalweb.component;
 
 
 import com.groupp.crystalweb.entity.MedicalRecord;
+import com.groupp.crystalweb.service.ClientService;
 import com.groupp.crystalweb.service.EmailSenderService;
 import com.groupp.crystalweb.service.EmployeeService;
 import com.groupp.crystalweb.service.MedicalRecordService;
@@ -16,11 +17,13 @@ public class EmailScheduler {
     private final MedicalRecordService medicalRecordService;
     private final EmailSenderService emailSenderService;
     private final EmployeeService employeeService;
+    private final ClientService clientService;
 
-    public EmailScheduler(MedicalRecordService medicalRecordService , EmailSenderService emailSenderService, EmployeeService employeeService){
+    public EmailScheduler(MedicalRecordService medicalRecordService , EmailSenderService emailSenderService, EmployeeService employeeService,ClientService clientService){
         this.medicalRecordService = medicalRecordService;
         this.emailSenderService = emailSenderService;
         this.employeeService = employeeService;
+        this.clientService = clientService;
 
     }
     @Scheduled(cron = "0 1 0 * * *") //every day at 12.01AM
@@ -31,7 +34,7 @@ public class EmailScheduler {
         for(MedicalRecord m:medicalRecord){
             if(m.getReminderDate().equals(currentDate)){
                String vetEmail = employeeService.getEmployee(m.getVetRefId()).getEmployeeEmail();
-               String clientEmail = m.getPetRefId();
+               String clientEmail = clientService.getClient(m.getPetRefId()).getEmail();
                String subject = "Reminder"+m.getReminderType().toString();
                String body;
                 if ("VACCINE".equals(m.getReminderType().toString())) {

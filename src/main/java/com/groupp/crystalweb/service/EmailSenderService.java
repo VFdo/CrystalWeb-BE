@@ -24,7 +24,7 @@ public class EmailSenderService {
     }
 
 
-    public String sendEmail(@Nullable MultipartFile[] file, String to, @Nullable String[] cc , String subject, String body){
+    public String sendEmail(@Nullable MultipartFile[] file, String to, @Nullable String cc , String subject, String body){
        try{
            MimeMessage mimeMessage = mailSender.createMimeMessage();
            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);

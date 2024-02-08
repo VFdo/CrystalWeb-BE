@@ -1,11 +1,10 @@
 package com.groupp.crystalweb.dto.request;
 
-import java.util.Date;
 
 public record VetServiceRequest(
-        String refId,
         String name,
-        Float avgTime,
+        Boolean chargeByTime,
+        String durationMeasure,
         Float amount
 ) {
 }

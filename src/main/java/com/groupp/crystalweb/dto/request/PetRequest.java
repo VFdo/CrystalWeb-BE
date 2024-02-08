@@ -1,12 +1,15 @@
 package com.groupp.crystalweb.dto.request;
 
-import java.util.Date;
+import com.groupp.crystalweb.entity.Gender;
+
+import java.time.LocalDate;
 
 public record PetRequest(
-        String refId,
         String name,
-        Date dob,
+        LocalDate dob,
         String typeOfAnimal,
-        byte[] photo
+        Gender gender,
+        byte[] photo,
+        String clientRefId
 ) {
 }

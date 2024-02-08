@@ -1,8 +1,13 @@
 package com.groupp.crystalweb.controller;
 
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.InventoryRequest;
+import com.groupp.crystalweb.dto.response.ApiResponse;
+import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Inventory;
 import com.groupp.crystalweb.service.InventoryService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,35 +22,66 @@ public class InventoryController {
 
 //    save inventory
     @PostMapping("inventory")
-    public Inventory saveInventory(@RequestBody InventoryRequest inventoryRequest){
-        return inventoryService.saveInventory(inventoryRequest);
+    public ResponseEntity<ApiResponse> saveInventory(@Valid @RequestBody InventoryRequest inventoryRequest){
+        Inventory savedInventory =  inventoryService.saveInventory(inventoryRequest);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                savedInventory
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    update inventory
     @PutMapping("inventory/{id}")
-    public Inventory updateInventory(@PathVariable String id, @RequestBody InventoryRequest inventoryRequest){
-        return inventoryService.update(id, inventoryRequest);
+    public ResponseEntity<ApiResponse> updateInventory(@PathVariable String id, @RequestBody InventoryRequest inventoryRequest){
+        Inventory updatedInventory = inventoryService.updateInventory(id, inventoryRequest);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                updatedInventory
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    find inventory by id
     @GetMapping("inventory/{id}")
-    public Inventory findInventory(@PathVariable String id){
-        return inventoryService.getInventory(id);
+    public ResponseEntity<ApiResponse> findInventory(@PathVariable String id){
+        Inventory existingInventory = inventoryService.getInventory(id);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                existingInventory
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    get all inventorys
     @GetMapping("/inventory")
-    public List<Inventory> getInventorys(){
-        return inventoryService.getAllInventorys();
+    public ResponseEntity<ApiResponse> getInventorys(@RequestParam(defaultValue = "0") int pageNumber,
+                                                  @RequestParam(defaultValue = "10") int pageSize){
+        Tuple<Object, Object> allInventorys = inventoryService.getAllInventorys(pageNumber, pageSize);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                allInventorys.first(),
+                (PageInfo) allInventorys.second()
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    delete inventory
     @DeleteMapping("inventory/delete/{id}")
-    public String deleteInventory(@PathVariable String id){
+    public ResponseEntity<ApiResponse> deleteInventory(@PathVariable String id){
         long deleted = inventoryService.deleteInventory(id);
-        if(deleted != 0){
-            return ("Item deleted successfully");
+        ApiResponse response = new ApiResponse();
+        response.setStatus(200);
+        response.setMessage("Success");
+        if(deleted !=0){
+            response.setPayload("Inventory deleted successfully");
+        } else {
+            response.setPayload("Inventory not found");
         }
-        return "Item not found!";
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,6 +1,7 @@
 package com.groupp.crystalweb.component;
 
 
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.entity.MedicalRecord;
 import com.groupp.crystalweb.service.ClientService;
 import com.groupp.crystalweb.service.EmailSenderService;
@@ -27,14 +28,17 @@ public class EmailScheduler {
 
     }
     @Scheduled(cron = "0 1 0 * * *") //every day at 12.01AM
-
     public void sendScheduledReminders(){
-        List<MedicalRecord> medicalRecord = medicalRecordService.getAllMedicalRecords();
+        // Retrieve medical records with page information
+        Tuple<Object, Object> medicalRecordsTuple = medicalRecordService.getAllMedicalRecords(0, 10);
+
+        // Extract medical records directly without casting
+        List<MedicalRecord> medicalRecords = (List<MedicalRecord>) medicalRecordsTuple.first();;
         LocalDate currentDate = LocalDate.now();
-        for(MedicalRecord m:medicalRecord){
+        for(MedicalRecord m:medicalRecords){
             if(m.getReminderDate().equals(currentDate)){
-               String vetEmail = employeeService.getEmployee(m.getVetRefId()).getEmployeeEmail();
-               String clientEmail = clientService.getClient(m.getPetRefId()).getEmail();
+               String vetEmail = employeeService.getEmployee(String.valueOf(m.getVetRefId())).getEmployeeEmail();
+               String clientEmail = clientService.getClient(String.valueOf(m.getPetRefId())).getEmail();
                String subject = "Reminder"+m.getReminderType().toString();
                String body;
                 if ("VACCINE".equals(m.getReminderType().toString())) {
@@ -42,7 +46,9 @@ public class EmailScheduler {
                 }else{
                    body = "The follow up consultation for the pet"+m.getPetRefId()+"is today";
                }
-               emailSenderService.sendEmail(null,vetEmail,clientEmail,subject,body);
+               emailSenderService.sendEmail(null,vetEmail,null,subject,body);
+                emailSenderService.sendEmail(null,clientEmail,null,subject,body);
+
             }
         }
     }

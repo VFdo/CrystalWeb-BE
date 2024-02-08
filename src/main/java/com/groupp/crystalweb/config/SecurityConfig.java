@@ -43,12 +43,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(new AntPathRequestMatcher("/user*"))
-                .hasRole("admin")
-                .requestMatchers(new AntPathRequestMatcher("/"))
-                .permitAll()
-                .anyRequest()
-                .authenticated());
+                .requestMatchers(new AntPathRequestMatcher("/pet*")).hasRole("admin")
+                .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                .anyRequest().authenticated());
         http.oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(Customizer.withDefaults()));
         http.oauth2Login(Customizer.withDefaults())
@@ -68,8 +65,6 @@ public class SecurityConfig {
                 var oidcUserAuthority = (OidcUserAuthority) authority;
                 var userInfo = oidcUserAuthority.getUserInfo();
 
-                // Tokens can be configured to return roles under
-                // Groups or REALM ACCESS hence have to check both
                 if (userInfo.hasClaim(REALM_ACCESS_CLAIM)) {
                     var realmAccess = userInfo.getClaimAsMap(REALM_ACCESS_CLAIM);
                     var roles = (Collection) realmAccess.get(ROLES_CLAIM);

@@ -48,18 +48,31 @@ public class Employee extends SerializableObject {
     private String employeeAddress;
 
     @NotNull(message = "Employee Basic Salary is required")
-    private float employeeBasicSalary;
+    private double employeeBasicSalary;
 
     @NotNull(message = "Daily Hours Count is required")
-    private Integer employeeRequiredDailyHours;
+    private double employeeRequiredDailyHours;
 
     @NotNull(message = "Daily Hourly Pay is required")
-    private float employeeHourlyPay;
+    private double employeeHourlyPay;
+
+    public double getEmployeeHourlyPay() {
+        return employeeHourlyPay;
+    }
 
     @Size(min = 0)
     @ElementCollection
     @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private List<String> employeeSkillList;
+
+    public String getEmployeeRefId() {
+        return refId;
+    }
+
+    public void setEmployeeRefId(String refId) {
+        this.refId = refId;
+    }
+
 
     public String getEmployeeNIC() {
         return employeeNIC;
@@ -125,7 +138,7 @@ public class Employee extends SerializableObject {
         this.employeeAddress = employeeAddress;
     }
 
-    public float getEmployeeBasicSalary() {
+    public double getEmployeeBasicSalary() {
         return employeeBasicSalary;
     }
 
@@ -133,11 +146,11 @@ public class Employee extends SerializableObject {
         this.employeeBasicSalary = employeeBasicSalary;
     }
 
-    public Integer getEmployeeRequiredDailyHours() {
+    public double getEmployeeRequiredDailyHours() {
         return employeeRequiredDailyHours;
     }
 
-    public void setEmployeeRequiredDailyHours(Integer employeeRequiredDailyHours) {
+    public void setEmployeeRequiredDailyHours(double employeeRequiredDailyHours) {
         this.employeeRequiredDailyHours = employeeRequiredDailyHours;
     }
 
@@ -148,8 +161,4 @@ public class Employee extends SerializableObject {
     public void setEmployeeSkillList(List<String> employeeSkillList) {
         this.employeeSkillList = employeeSkillList;
     }
-
-
-
-
 }

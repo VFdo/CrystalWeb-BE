@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,4 +26,6 @@ public class Attendance {
     private LocalDateTime outTime;
     private int overTimeHours;
     private String notes;
+
+
 }

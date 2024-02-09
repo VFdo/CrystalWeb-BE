@@ -3,6 +3,7 @@ package com.groupp.crystalweb.service;
 import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.EmployeeRequest;
 import com.groupp.crystalweb.dto.response.PageInfo;
+import com.groupp.crystalweb.entity.Attendance;
 import com.groupp.crystalweb.entity.Employee;
 import com.groupp.crystalweb.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,6 +119,34 @@ public class EmployeeService {
             log.info("Salary calculation failed: {}", e.getMessage());
             throw new RuntimeException("Something went wrong!");
         }
+    }
+
+
+    // Calculate total salary
+    public static double calculateTotalSalary(Employee employee, List<Attendance> attendanceRecords) {
+        double totalWorkingHours = 0;
+        for (Attendance record : attendanceRecords) {
+            // Calculate the duration for each attendance record
+            LocalDateTime inTime = record.getInTime();
+            LocalDateTime outTime = record.getOutTime();
+            double duration = Duration.between(inTime, outTime).toHours(); // Calculate duration in hours
+            totalWorkingHours += duration;
+        }
+
+        double requiredHours = employee.getEmployeeRequiredDailyHours();
+        double hourlyPay = employee.getEmployeeHourlyPay();
+        double basicSalary = employee.getEmployeeBasicSalary();
+
+        // Calculate overtime hours
+        double overtimeHours = Math.max(totalWorkingHours - requiredHours, 0);
+
+        // Calculate overtime payment
+        double overtimePayment = Math.round(overtimeHours * hourlyPay);
+
+        // Calculate total salary
+        double totalSalary = basicSalary + overtimePayment;
+
+        return totalSalary;
     }
 
 

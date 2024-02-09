@@ -6,6 +6,7 @@ import com.groupp.crystalweb.repository.AttendanceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,7 @@ public class AttendanceService {
     public List<Attendance> getAllAttendance(){
         return (List<Attendance>) attendanceRepository.findAll();
     }
+
 
     public long deleteAttendance(String id){
         return attendanceRepository.deleteByRefId(id);

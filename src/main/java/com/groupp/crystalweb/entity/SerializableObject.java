@@ -20,7 +20,7 @@ public abstract class SerializableObject implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    private String refId;
+    public String refId;
 
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateFormats.LOCAL_DATE_TIME)

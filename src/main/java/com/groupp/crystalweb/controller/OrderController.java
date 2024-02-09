@@ -34,8 +34,8 @@ public class OrderController {
 
     //    get by id
     @GetMapping("/order/{id}")
-    public Order getOrder(@PathVariable String refId){
-        return orderService.getOrder(refId);
+    public Order getOrder(@PathVariable String id){
+        return orderService.getOrder(id);
     }
 
     //    update by id
@@ -45,14 +45,14 @@ public class OrderController {
     }
 
     //    delete by id
-    @DeleteMapping("order/delete/{refId}")
-    public String deleteOrder(@PathVariable String refId){
-        long deleted = orderService.deleteOrder(refId);
-        if(deleted != 0){
-            return ("Order deleted successfully");
-        }
-        return "Order not found!";
-    }
+//    @DeleteMapping("order/delete/{refId}")
+//    public String deleteOrder(@PathVariable String refId){
+//        long deleted = orderService.deleteOrder(refId);
+//        if(deleted != 0){
+//            return ("Order deleted successfully");
+//        }
+//        return "Order not found!";
+//    }
 
 }
 

@@ -1,32 +1,63 @@
 package com.groupp.crystalweb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.groupp.crystalweb.common.DateFormats;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Bill {
-    @Id
-    private String refId;
-    private Date dateTime;
-    private String clientRefId;
-    private String employeeRefId;
+@Table(name = "bill")
+public class Bill extends SerializableObject {
 
-    @Transient
+    @NotNull(message = "Bill Created Date is required")
+    @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
+    private LocalDateTime dateTime;
+
+    @NotNull(message = "Client ID is required")
+    @ManyToOne
+    @JsonIgnore
+    private Client clientRefId;
+
+    @JsonProperty("clientId")
+    public String getClientId() {
+        return (clientRefId != null) ? clientRefId.getRefId() : null;
+    }
+
+    @NotNull(message = "Employee ID is required")
+    @ManyToOne
+    @JsonIgnore
+    private Employee employeeRefId;
+
+    @JsonProperty("employeeId")
+    public String getEmployeeId() {
+        return (employeeRefId != null) ? employeeRefId.getRefId() : null;
+    }
+
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "bill_item_list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> itemsList;
 
-    @Transient
+    @Size(min = 1)
+    @ElementCollection
+    @CollectionTable(name = "Bill_service_list", joinColumns = @JoinColumn(name = "bill_id"))
     private List<String> servicesList;
+
     private Float additionalCharge;
+
+    @NotNull(message = "Total Price is required")
     private Float totalPrice;
 
     public enum PaymentType{
@@ -35,6 +66,7 @@ public class Bill {
         OTHER;
     }
 
+    @NotNull(message = "Payment Type is required")
     private PaymentType paymentType;
 
     public enum Status{
@@ -43,13 +75,10 @@ public class Bill {
         DELETE;
     }
 
+    @NotNull(message = "Status is required")
     private Status status;
 
     private String notes;
-
-    public String getRefId() {
-        return refId;
-    }
 
     public PaymentType getPaymentType() {
         return paymentType;
@@ -67,32 +96,12 @@ public class Bill {
         this.status = status;
     }
 
-    public void setRefId(String refId) {
-        this.refId = refId;
-    }
-
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public String getClientRefId() {
-        return clientRefId;
-    }
-
-    public void setClientRefId(String clientRefId) {
-        this.clientRefId = clientRefId;
-    }
-
-    public String getEmployeeRefId() {
-        return employeeRefId;
-    }
-
-    public void setEmployeeRefId(String employeeRefId) {
-        this.employeeRefId = employeeRefId;
     }
 
     public List<String> getItemsList() {
@@ -135,5 +144,4 @@ public class Bill {
         this.notes = notes;
     }
 
-    //    private List<String> billList;
 }

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 
 @Data
@@ -19,13 +20,21 @@ import lombok.NoArgsConstructor;
 //@allArgsConstructor
 public class User extends SerializableObject {
     @NotBlank(message = "User Name is required")
-    private String userName;
+    private String username;
 
     @NotBlank(message = "Password is required")
     private String password;
 
-    private Role role;
+    private String email;
 
+    @ElementCollection
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Role> role;
 
-
+    public User(String userName, String email, String encode) {
+        super();
+        this.username = userName;
+        this.password = encode;
+        this.email = email;
+    }
 }

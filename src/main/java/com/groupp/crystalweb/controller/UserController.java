@@ -6,11 +6,9 @@ import com.groupp.crystalweb.dto.response.ApiResponse;
 import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.User;
 import com.groupp.crystalweb.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -22,22 +20,7 @@ public class UserController {
 
 
 
-//    save user
-    @PostMapping("/user")
-    public ResponseEntity<ApiResponse> saveUser(@Valid @RequestBody UserRequest userRequest){
-       User savedUser = userService.saveUser(userRequest);
-       ApiResponse response = new ApiResponse(
-               200,
-               "Success",
-               savedUser
-       );
-        return ResponseEntity.ok(response);
-    }
-
-
-
-
-
+//    save user - moved to Auth Controller
 
 //    get all users
     @GetMapping("/user")

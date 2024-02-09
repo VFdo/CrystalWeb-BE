@@ -2,11 +2,14 @@ package com.groupp.crystalweb.dto.request;
 
 import com.groupp.crystalweb.entity.Role;
 
+import java.util.List;
+
 
 public record UserRequest (
     String userName,
     String password,
-    Role role
+    String email,
+    List<Role> role
 
 ){
 

@@ -30,8 +30,9 @@ public class UserService {
         log.info("User save request received");
         try {
             User newUser = new User();
-            newUser.setUserName(userRequest.userName());
+            newUser.setUsername(userRequest.userName());
             newUser.setPassword(userRequest.password());
+            newUser.setEmail(userRequest.email());
             newUser.setRole(userRequest.role());
             return userRepository.save(newUser);
         }catch (Exception e){
@@ -65,13 +66,14 @@ public class UserService {
         Optional<User> user = userRepository.findByRefId(userId);
         if(user.isPresent()){
             User existingUser = user.get();
-            existingUser.setUserName(userRequest.userName());
+            existingUser.setUsername(userRequest.userName());
             existingUser.setPassword(userRequest.password());
+            existingUser.setEmail(userRequest.email());
             existingUser.setRole(userRequest.role());
 
             return userRepository.save(existingUser);
         }
-        log.info("User not found for id: P{}",userId);
+        log.info("User not found for id: ",userId);
         return null;
     }
 

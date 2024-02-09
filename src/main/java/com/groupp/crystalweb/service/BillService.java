@@ -3,9 +3,7 @@ package com.groupp.crystalweb.service;
 import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.BillRequest;
 import com.groupp.crystalweb.dto.response.PageInfo;
-import com.groupp.crystalweb.entity.Bill;
-import com.groupp.crystalweb.entity.Client;
-import com.groupp.crystalweb.entity.Employee;
+import com.groupp.crystalweb.entity.*;
 import com.groupp.crystalweb.repository.BillRepository;
 import com.groupp.crystalweb.repository.ClientRepository;
 import com.groupp.crystalweb.repository.EmployeeRepository;
@@ -112,5 +110,63 @@ public class BillService {
 
     public long deleteBill(String id) {
         return billRepository.deleteByRefId(id);
+    }
+
+    public Float[] calculateTotalServiceCharges(List<VetService> vetServices, int totalDuration) {
+        Float totalServiceCharges = 0.0f;
+        Float additionalCharges = 0.0f;
+
+        for (VetService service : vetServices) {
+            Float serviceCharge = 0.0f;
+
+            if (service.getChargeByTime()) {
+                int includedDuration = Math.round(totalDuration);
+                if (totalDuration > includedDuration) {
+                    // Calculate additional charge
+                    int additionalDuration = totalDuration - includedDuration;
+                    Float additionalChargePerUnit = service.getAmount();
+                    additionalCharges += additionalDuration * additionalChargePerUnit;
+
+                    // Calculate charge for included duration
+                    serviceCharge = service.getAmount() * includedDuration;
+                } else {
+                    // Calculate charge for full duration
+                    serviceCharge = service.getAmount() * totalDuration;
+                }
+            } else {
+                // If service is not charged by time, add fixed amount
+                serviceCharge = service.getAmount();
+            }
+
+            totalServiceCharges += serviceCharge;
+        }
+
+        return new Float[]{totalServiceCharges, additionalCharges};
+    }
+
+    public Float calculateTotalItemCost(List<String> itemsList, List<PetStore> petStoreItems) {
+        float totalCost = 0.0f;
+
+        if (itemsList != null && petStoreItems != null) {
+            for (String itemId : itemsList) {
+                for (PetStore petStoreItem : petStoreItems) {
+                    if (petStoreItem.getRefId().equals(itemId)) {
+                        totalCost += petStoreItem.getUnitprice();
+                        break; // Once found, break the inner loop
+                    }
+                }
+            }
+        }
+
+        return totalCost;
+    }
+
+    public Float calculateTotalBill(List<String> itemsList, List<PetStore> petStoreItems, List<VetService> vetServices, int totalDuration)
+    {
+        Float[] totalServiceCharges = calculateTotalServiceCharges(vetServices, totalDuration);
+        Float totalItemCost = calculateTotalItemCost(itemsList, petStoreItems);
+
+        Float totalBill = totalServiceCharges[0] + totalServiceCharges[1] + totalItemCost;
+        return totalBill;
     }
 }

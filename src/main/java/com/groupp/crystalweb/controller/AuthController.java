@@ -95,6 +95,10 @@ public class AuthController {
                         log.info("setting staff role");
                         roles.add(Role.STAFF);
                         break;
+                    case CLIENT:
+                        log.info("setting client role");
+                        roles.add(Role.CLIENT);
+                        break;
                     default:
                         log.info("invalid role mapping!");
                         throw new RuntimeException("Invalid role mapping attempted!");

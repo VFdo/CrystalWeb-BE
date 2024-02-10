@@ -27,14 +27,9 @@ public class User extends SerializableObject {
 
     private String email;
 
+    private String dataId;
+
     @ElementCollection
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     private List<Role> role;
-
-    public User(String userName, String email, String encode) {
-        super();
-        this.username = userName;
-        this.password = encode;
-        this.email = email;
-    }
 }

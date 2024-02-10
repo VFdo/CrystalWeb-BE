@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @Slf4j
 //@RequestMapping("/api/auth")
 public class AuthController {
@@ -58,9 +57,12 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                userDetails.getDataId(),
                 roles));
     }
 
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+//    @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("/user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRequest signUpRequest) {
         log.info("user registration request received!");
@@ -75,9 +77,11 @@ public class AuthController {
                     .badRequest()
                     .body("Error: Email is already in use!");
         }
-        User user = new User(signUpRequest.userName(),
-                signUpRequest.email(),
-                encoder.encode(signUpRequest.password()));
+        User user = new User();
+        user.setUsername(signUpRequest.userName());
+        user.setPassword(encoder.encode(signUpRequest.password()));
+        user.setEmail(signUpRequest.email());
+        user.setDataId(signUpRequest.dataId());
 
         List<Role> strRoles = signUpRequest.role();
         List<Role> roles = new ArrayList<>();

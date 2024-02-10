@@ -9,6 +9,7 @@ public record UserRequest (
     String userName,
     String password,
     String email,
+    String dataId,
     List<Role> role
 
 ){

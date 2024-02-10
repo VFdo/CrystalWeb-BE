@@ -19,6 +19,7 @@ public class UserDetailsImpl implements UserDetails {
     private String id;
     private String username;
     private String email;
+    private String dataId;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
@@ -32,6 +33,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getRefId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.getDataId(),
                 user.getPassword(),
                 authorities);
     }

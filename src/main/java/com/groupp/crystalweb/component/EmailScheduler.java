@@ -30,7 +30,7 @@ public class EmailScheduler {
         this.inventoryService = inventoryService;
 
     }
-    @Scheduled(cron = "0 1 0 * * *") //every day at 12.01AM
+    @Scheduled(cron = "0 4 16 * * *") //every day at 12.01AM
     public void sendScheduledReminders(){
         // Retrieve medical records with page information
         Tuple<Object, Object> medicalRecordsTuple = medicalRecordService.getAllMedicalRecords(0, 10);
@@ -41,7 +41,7 @@ public class EmailScheduler {
 
         for(MedicalRecord m:medicalRecords){
             if(m.getReminderDate().equals(currentDate)){
-               String vetEmail = employeeService.getEmployee(String.valueOf(m.getVetRefId())).getEmployeeEmail();
+              String vetEmail = employeeService.getEmployee(String.valueOf(m.getVetRefId())).getEmployeeEmail();
                String clientEmail = clientService.getClient(String.valueOf(m.getPetRefId())).getEmail();
                String subject = "Reminder"+m.getReminderType().toString();
                String body;
@@ -50,8 +50,9 @@ public class EmailScheduler {
                 }else{
                    body = "The follow up consultation for the pet"+m.getPetRefId()+"is today";
                }
-              emailSenderService.sendEmail(null,vetEmail,null,subject,body);
-                emailSenderService.sendEmail(null,clientEmail,null,subject,body);
+
+              emailSenderService.sendEmail(null,vetEmail,vetEmail,subject,body);
+                emailSenderService.sendEmail(null,vetEmail,vetEmail,subject,body);
 
             }
         }
@@ -77,9 +78,10 @@ public class EmailScheduler {
 
         for(Inventory i:inventories){
             if(i.getAvaQuantity()<10){
+                //String adminEmail = "janithkulatunge@gmail.com";
                 String subject = "Inventory stocks low Alert";
                 String body = "Inventory of "+i.getName()+" stocks are less than 10 units. Recommend to purchase new stocks ";
-               emailSenderService.sendEmail(null,adminEmail,null,subject,body);
+               emailSenderService.sendEmail(null,adminEmail,adminEmail,subject,body);
 
             }
         }

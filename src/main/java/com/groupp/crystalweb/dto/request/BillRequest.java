@@ -1,14 +1,12 @@
 package com.groupp.crystalweb.dto.request;
 
 import com.groupp.crystalweb.entity.Bill;
-import jakarta.persistence.Transient;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record BillRequest(
-        String refId,
-        Date dateTime,
+        LocalDateTime dateTime,
         String clientRefId,
         String employeeRefId,
         List<String> itemsList,

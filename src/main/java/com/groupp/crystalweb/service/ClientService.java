@@ -35,7 +35,7 @@ public class ClientService {
             newClient.setEmail(clientRequest.email());
             return clientRepository.save(newClient);
         } catch (Exception e){
-            log.info("client saving failed: {}, {}", e.getMessage(), clientRequest.refId());
+            log.info("client saving failed: {}", e.getMessage());
             throw new RuntimeException("Something went wrong!");
         }
     }

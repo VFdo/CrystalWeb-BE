@@ -26,7 +26,7 @@ public class Client extends SerializableObject {
 
     @Size(min = 1)
     @ElementCollection
-    @CollectionTable(name = "phone_numbers", joinColumns = @JoinColumn(name = "client_id"))
+    @CollectionTable(name = "client_phone_numbers", joinColumns = @JoinColumn(name = "client_id"))
     private List<String> phone;
 
     @Email(message = "Invalid email format")
@@ -35,8 +35,3 @@ public class Client extends SerializableObject {
 
     private Role role = Role.CLIENT;
 }
-
-
-// ------ CHANGES: ------
-//- phone changed to List
-//- Role datatype changed

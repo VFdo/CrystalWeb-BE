@@ -1,17 +1,18 @@
 package com.groupp.crystalweb.dto.request;
 
+import com.groupp.crystalweb.entity.Documents;
 import com.groupp.crystalweb.entity.ReminderType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record MedicalRecordRequest(
-    String refId,
-    LocalDate date,
+   LocalDate date,
     String petRefId,
     String vetRefId,
-    String docs,
+    List<Documents> docs,
     LocalDate reminderDate,
-    String notes,
+    String treatment,
     ReminderType reminderType)
 {
 

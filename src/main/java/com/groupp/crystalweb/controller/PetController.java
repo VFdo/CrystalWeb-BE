@@ -1,11 +1,14 @@
 package com.groupp.crystalweb.controller;
 
+import com.groupp.crystalweb.common.Tuple;
 import com.groupp.crystalweb.dto.request.PetRequest;
+import com.groupp.crystalweb.dto.response.ApiResponse;
+import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Pet;
 import com.groupp.crystalweb.service.PetService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 public class PetController {
@@ -17,35 +20,66 @@ public class PetController {
 
 //    save pet
     @PostMapping("pet")
-    public Pet savePet(@RequestBody PetRequest petRequest){
-        return petService.savePet(petRequest);
+    public ResponseEntity<ApiResponse> savePet(@RequestBody PetRequest petRequest){
+        Pet savedPet = petService.savePet(petRequest);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                savedPet
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    update pet
     @PutMapping("pet/{id}")
-    public Pet updatePet(@PathVariable String id, @RequestBody PetRequest petRequest){
-        return petService.update(id, petRequest);
+    public ResponseEntity<ApiResponse> updatePet(@PathVariable String id, @RequestBody PetRequest petRequest){
+        Pet updatedPet = petService.update(id, petRequest);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                updatedPet
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    find pet by id
     @GetMapping("pet/{id}")
-    public Pet findPet(@PathVariable String id){
-        return petService.getPet(id);
+    public ResponseEntity<ApiResponse> findPet(@PathVariable String id){
+        Pet existingPet = petService.getPet(id);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                existingPet
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    get all pets
     @GetMapping("/pet")
-    public List<Pet> getPets(){
-        return petService.getAllPets();
+    public ResponseEntity<ApiResponse> getPets(@RequestParam(defaultValue = "0") int pageNumber,
+                                               @RequestParam(defaultValue = "10") int pageSize){
+        Tuple<Object, Object> allPets = petService.getAllPets(pageNumber, pageSize);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                allPets.first(),
+                (PageInfo) allPets.second()
+        );
+        return ResponseEntity.ok(response);
     }
 
 //    delete pet
     @DeleteMapping("pet/delete/{id}")
-    public String deletePet(@PathVariable String id){
+    public ResponseEntity<ApiResponse> deletePet(@PathVariable String id){
         long deleted = petService.deletePet(id);
-        if(deleted != 0){
-            return ("Item deleted successfully");
+        ApiResponse response = new ApiResponse();
+        response.setStatus(200);
+        response.setMessage("Success");
+        if(deleted !=0){
+            response.setPayload("Pet deleted successfully");
+        } else {
+            response.setPayload("Pet not found");
         }
-        return "Item not found!";
+        return ResponseEntity.ok(response);
     }
 }

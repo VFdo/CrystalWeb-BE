@@ -79,9 +79,10 @@ public class WebSecurityConfig  {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signin").permitAll()
-                        .requestMatchers("/pet").permitAll()
-                        .requestMatchers("/user").permitAll()
-                        .requestMatchers("/client").permitAll()
+                        .requestMatchers("/pet/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/client/**").permitAll()
+                        .requestMatchers("/medical-record/**").permitAll()
                         .anyRequest().authenticated());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

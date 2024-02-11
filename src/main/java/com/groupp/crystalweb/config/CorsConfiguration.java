@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebMvc
-@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsConfiguration implements WebMvcConfigurer {
 
     @Override

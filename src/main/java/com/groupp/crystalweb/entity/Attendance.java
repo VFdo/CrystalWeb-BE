@@ -11,7 +11,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,19 +23,26 @@ import java.time.LocalDateTime;
 @Table(name = "attendance")
 public class Attendance extends SerializableObject {
 
-    @ManyToOne
+
     @JsonIgnore
-    private Employee employee;
+    private String employeeRefId;
+
+    @NotNull(message = "Password is Required")
+    private String password;
 
     @NotNull(message = "Check in time is Required")
-    @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
-    private LocalDateTime inTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate date;
 
     @NotNull(message = "Check out time is Required")
     @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
-    private LocalDateTime outTime;
+    private LocalDateTime inTime;
 
-    private int overTimeHours;
+//    @ManyToOne
+//    @JsonIgnore
+   // private Employee employee;
 
-    private String notes;
+    //private int overTimeHours;
+
+    //private String notes;
 }

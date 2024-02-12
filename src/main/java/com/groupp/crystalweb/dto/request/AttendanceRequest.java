@@ -6,10 +6,11 @@ import java.time.LocalDateTime;
 public record AttendanceRequest(
 
         String employeeRefId,
+        String password,
 
-        LocalDateTime inTime,
-        LocalDateTime outTime,
-        int overTimeHours,
-        String notes
+        LocalDate date,
+        LocalDateTime inTime
+
+
 ) {
 }

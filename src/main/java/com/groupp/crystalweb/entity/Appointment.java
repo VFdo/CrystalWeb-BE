@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,9 +22,25 @@ import java.time.LocalDateTime;
 @Table(name = "appointment")
 public class Appointment extends SerializableObject {
 
+    @NotNull(message = "Name is Required")
+    private String name;
+    @NotNull(message = "Name is Required")
+
+    private String email;
+    @NotNull(message = "Name is Required")
+
+    private String phoneNo;
+
     @NotNull(message = "Check in time is Required")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate date;
+
+
     @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
-    private LocalDateTime date;
+    private LocalDateTime time;
+
+    @NotNull(message = "Check in time is Required")
+    private int noOfPets;
 
     @NotNull(message = "Client ID must be present")
     @ManyToOne

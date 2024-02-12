@@ -19,6 +19,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
@@ -67,22 +68,22 @@ public class EmailSenderService {
 
     }
 
-    public EmailMessage saveEmailMessage(EmailRequest emailRequest) {
-        log.info("email save request received");
-        try {
-            EmailMessage newEmailMessage = new EmailMessage();
-            newEmailMessage.setReceiver(emailRequest.reciever());
-            newEmailMessage.setReceiver(emailRequest.subject());
-            newEmailMessage.setReceiver(emailRequest.body());
-            newEmailMessage.setReceiver(emailRequest.file());
-
-
-            return emailRepository.save(newEmailMessage);
-        } catch (Exception e) {
-            log.info("email saving failed: {}", e.getMessage());
-            throw new RuntimeException("Something went wrong!");
-        }
-    }
+//    public EmailMessage saveEmailMessage(EmailRequest emailRequest) {
+//        log.info("email save request received");
+//        try {
+//            EmailMessage newEmailMessage = new EmailMessage();
+//            newEmailMessage.setReceiver(emailRequest.reciever());
+//            newEmailMessage.setReceiver(emailRequest.subject());
+//            newEmailMessage.setReceiver(emailRequest.body());
+//            newEmailMessage.setReceiver(emailRequest.file());
+//
+//
+//            return emailRepository.save(newEmailMessage);
+//        } catch (Exception e) {
+//            log.info("email saving failed: {}", e.getMessage());
+//            throw new RuntimeException("Something went wrong!");
+//        }
+//    }
 
     public EmailMessage getEmail(String id) {
         Optional<EmailMessage> emailMessage = emailRepository.findByRefId(id);

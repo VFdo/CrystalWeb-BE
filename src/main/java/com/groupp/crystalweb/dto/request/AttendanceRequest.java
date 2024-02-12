@@ -2,6 +2,7 @@ package com.groupp.crystalweb.dto.request;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record AttendanceRequest(
 
@@ -9,7 +10,7 @@ public record AttendanceRequest(
         String password,
 
         LocalDate date,
-        LocalDateTime inTime
+        LocalTime inTime
 
 
 ) {

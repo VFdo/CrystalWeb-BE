@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -36,8 +37,8 @@ public class Appointment extends SerializableObject {
     private LocalDate date;
 
     @NotNull(message = "Check in time is Required")
-    @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
-    private LocalDateTime time;
+    @JsonFormat(pattern = DateFormats.LOCAL_TIME)
+    private LocalTime time;
 
     @NotNull(message = "No of pets is Required")
     private int noOfPets;

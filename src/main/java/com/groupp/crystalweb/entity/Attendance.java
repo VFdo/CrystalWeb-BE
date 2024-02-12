@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -36,7 +37,7 @@ public class Attendance extends SerializableObject {
 
     @NotNull(message = "Check in time is Required")
     @JsonFormat(pattern = DateFormats.LOCAL_TIME)
-    private LocalDateTime inTime;
+    private LocalTime inTime;
 
 //    @ManyToOne
 //    @JsonIgnore

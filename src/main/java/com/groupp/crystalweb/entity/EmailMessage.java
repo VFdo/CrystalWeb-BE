@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "email")
 
 public class EmailMessage extends SerializableObject {
-    private String receiver;
+    private String reciever;
     private String subject;
     private String message;
 }

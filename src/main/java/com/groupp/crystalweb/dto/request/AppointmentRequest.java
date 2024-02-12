@@ -4,6 +4,7 @@ import com.groupp.crystalweb.entity.Status;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record AppointmentRequest (
         String name,
@@ -11,7 +12,7 @@ public record AppointmentRequest (
         String phoneNo,
 
         LocalDate date,
-        LocalDateTime time,
+        LocalTime time,
         int noOfPets
 //        String clientRefId,
 //        String employeeRefId,

@@ -33,13 +33,13 @@ public class AttendanceService {
         try {
             Optional<Employee> employee = employeeRepository.findByRefId(attendanceRequest.employeeRefId());
             Attendance newAttendance = new Attendance();
+            newAttendance.setEmployeeRefId(attendanceRequest.employeeRefId());
+            newAttendance.setPassword(attendanceRequest.password());
+           newAttendance.setDate(attendanceRequest.date());
             newAttendance.setInTime(attendanceRequest.inTime());
-            newAttendance.setOutTime(attendanceRequest.outTime());
-            newAttendance.setOverTimeHours(attendanceRequest.overTimeHours());
-            newAttendance.setNotes(attendanceRequest.notes());
-            if (employee.isPresent()) {
-                newAttendance.setEmployee(employee.get());
-            }
+//            if (employee.isPresent()) {
+//                newAttendance.setEmployee(employee.get());
+//            }
             return attendanceRepository.save(newAttendance);
         }catch(Exception e){
             log.info("Attendance saving failed: {}",e.getMessage());
@@ -48,20 +48,20 @@ public class AttendanceService {
 
     }
 
-    public Attendance updateAttendance(String id,AttendanceRequest attendanceRequest) {
-        Optional<Attendance> attendance = attendanceRepository.findByRefId(id);
-        if (attendance.isPresent()) {
-            Attendance existingAttendance = attendance.get();
-            existingAttendance.setInTime(attendanceRequest.inTime());
-            existingAttendance.setOutTime(attendanceRequest.outTime());
-            existingAttendance.setOverTimeHours(attendanceRequest.overTimeHours());
-            existingAttendance.setNotes(attendanceRequest.notes());
-            return attendanceRepository.save(existingAttendance);
-        } else {
-            log.info("Attendance not found for refId {} ");
-            return null;
-        }
-    }
+//    public Attendance updateAttendance(String id,AttendanceRequest attendanceRequest) {
+//        Optional<Attendance> attendance = attendanceRepository.findByRefId(id);
+//        if (attendance.isPresent()) {
+//            Attendance existingAttendance = attendance.get();
+//            existingAttendance.setInTime(attendanceRequest.inTime());
+//            existingAttendance.setOutTime(attendanceRequest.outTime());
+//            existingAttendance.setOverTimeHours(attendanceRequest.overTimeHours());
+//            existingAttendance.setNotes(attendanceRequest.notes());
+//            return attendanceRepository.save(existingAttendance);
+//        } else {
+//            log.info("Attendance not found for refId {} ");
+//            return null;
+//        }
+//    }
 
 
 

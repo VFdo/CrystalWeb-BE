@@ -1,0 +1,39 @@
+version: '3'
+services:
+  crystal-db:
+    platform: linux/x86_64
+    image: mysql:8.0.30
+    container_name: crystal-db
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=crystal
+    networks:
+      - crystal-net
+
+  crystal-service:
+    image: crystal
+    container_name: crystal-service
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - crystal-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=crystal
+    networks:
+      - crystal-net
+
+networks:
+  crystal-net:
+    name: crystal-net
+    external: true

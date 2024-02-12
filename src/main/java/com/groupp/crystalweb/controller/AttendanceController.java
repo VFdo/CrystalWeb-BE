@@ -7,6 +7,7 @@ import com.groupp.crystalweb.dto.response.PageInfo;
 import com.groupp.crystalweb.entity.Attendance;
 import com.groupp.crystalweb.service.AttendanceService;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,17 +36,17 @@ public class AttendanceController {
 
     //update
 
-    @PutMapping("attendance/{id}")
-    public ResponseEntity<ApiResponse> updateAttendance(@PathVariable String id,@RequestBody AttendanceRequest attendanceRequest){
-        Attendance updatedAttendance = attendanceService.updateAttendance(id,attendanceRequest);
-        ApiResponse response = new ApiResponse(
-                200,
-                "Success",
-                updatedAttendance
-        );
-
-        return ResponseEntity.ok(response);
-    }
+//    @PutMapping("attendance/{id}")
+//    public ResponseEntity<ApiResponse> updateAttendance(@PathVariable String id,@RequestBody AttendanceRequest attendanceRequest){
+//        Attendance updatedAttendance = attendanceService.updateAttendance(id,attendanceRequest);
+//        ApiResponse response = new ApiResponse(
+//                200,
+//                "Success",
+//                updatedAttendance
+//        );
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     //find attendance by id
     @GetMapping("attendance/{id}")

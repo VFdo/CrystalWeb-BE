@@ -31,25 +31,28 @@ public class AppointmentService {
     public Appointment saveAppointment(AppointmentRequest appointmentRequest){
         try{
             Appointment newAppointment = new Appointment();
-            Optional<Employee> employee = employeeRepository.findByRefId(appointmentRequest.employeeRefId());
-            Optional<Client> client = clientRepository.findByRefId(appointmentRequest.clientRefId());
-            Optional<Bill> bill = billRepository.findByRefId(appointmentRequest.billRefId());
-            Optional<Pet> pet = petRepository.findById(appointmentRequest.petRefId());
+//            Optional<Employee> employee = employeeRepository.findByRefId(appointmentRequest.employeeRefId());
+//            Optional<Client> client = clientRepository.findByRefId(appointmentRequest.clientRefId());
+//            Optional<Bill> bill = billRepository.findByRefId(appointmentRequest.billRefId());
+//            Optional<Pet> pet = petRepository.findById(appointmentRequest.petRefId());
+            newAppointment.setName(appointmentRequest.name());
+            newAppointment.setEmail(appointmentRequest.email());
+            newAppointment.setPhoneNo(appointmentRequest.phoneNo());
             newAppointment.setDate(appointmentRequest.date());
-            newAppointment.setStatus(appointmentRequest.status());
-            newAppointment.setNotes(appointmentRequest.notes());
-            if(employee.isPresent()){
-                newAppointment.setEmployee(employee.get());
-            }
-            if(client.isPresent()){
-                newAppointment.setClient(client.get());
-            }
-            if(bill.isPresent()){
-                newAppointment.setBill(bill.get());
-            }
-            if(pet.isPresent()){
-                newAppointment.setPet(pet.get());
-            }
+            newAppointment.setTime(appointmentRequest.time());
+            newAppointment.setNoOfPets(appointmentRequest.noOfPets());
+//            if(employee.isPresent()){
+//                newAppointment.setEmployee(employee.get());
+//            }
+//            if(client.isPresent()){
+//                newAppointment.setClient(client.get());
+//            }
+//            if(bill.isPresent()){
+//                newAppointment.setBill(bill.get());
+//            }
+//            if(pet.isPresent()){
+//                newAppointment.setPet(pet.get());
+//            }
             return appointmentRepository.save (newAppointment);
         }catch(Exception e) {
             log.info("Appointment saving failed {}", e.getMessage());
@@ -83,9 +86,12 @@ public class AppointmentService {
         Optional<Appointment> appointment = appointmentRepository.findByRefId(refId);
         if(appointment.isPresent()){
             Appointment existingAppointment = appointment.get();
+            existingAppointment.setName(appointmentRequest.name());
+            existingAppointment.setEmail(appointmentRequest.email());
+            existingAppointment.setPhoneNo(appointmentRequest.phoneNo());
             existingAppointment.setDate(appointmentRequest.date());
-            existingAppointment.setStatus(appointmentRequest.status());
-            existingAppointment.setNotes(appointmentRequest.notes());
+            existingAppointment.setTime(appointmentRequest.time());
+            existingAppointment.setNoOfPets(appointmentRequest.noOfPets());
             return appointmentRepository.save(existingAppointment);
         }
         log.info("Appointment not found for id: P{}", refId);

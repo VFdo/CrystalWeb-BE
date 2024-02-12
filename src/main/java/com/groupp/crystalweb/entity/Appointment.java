@@ -24,10 +24,10 @@ public class Appointment extends SerializableObject {
 
     @NotNull(message = "Name is Required")
     private String name;
-    @NotNull(message = "Name is Required")
+    @NotNull(message = "Email is Required")
 
     private String email;
-    @NotNull(message = "Name is Required")
+    @NotNull(message = "Phone number is Required")
 
     private String phoneNo;
 
@@ -35,14 +35,14 @@ public class Appointment extends SerializableObject {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
-
+    @NotNull(message = "Check in time is Required")
     @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
     private LocalDateTime time;
 
-    @NotNull(message = "Check in time is Required")
+    @NotNull(message = "No of pets is Required")
     private int noOfPets;
 
-    @NotNull(message = "Client ID must be present")
+
     @ManyToOne
     @JsonIgnore
     private Client client;

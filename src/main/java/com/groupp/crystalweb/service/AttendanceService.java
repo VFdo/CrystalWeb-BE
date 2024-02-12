@@ -35,7 +35,7 @@ public class AttendanceService {
             Attendance newAttendance = new Attendance();
             newAttendance.setEmployeeRefId(attendanceRequest.employeeRefId());
             newAttendance.setPassword(attendanceRequest.password());
-            newAttendance.setDate(attendanceRequest.date());
+           newAttendance.setDate(attendanceRequest.date());
             newAttendance.setInTime(attendanceRequest.inTime());
 //            if (employee.isPresent()) {
 //                newAttendance.setEmployee(employee.get());

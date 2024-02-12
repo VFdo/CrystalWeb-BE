@@ -12,14 +12,14 @@ public record AppointmentRequest (
 
         LocalDate date,
         LocalDateTime time,
-        int noOfPets,
-        String clientRefId,
-        String employeeRefId,
-        String billRefId,
-
-        String petRefId,
-        Status status,
-        String notes
+        int noOfPets
+//        String clientRefId,
+//        String employeeRefId,
+//        String billRefId,
+//
+//        String petRefId,
+//        Status status,
+//        String notes
 
 ){
 }

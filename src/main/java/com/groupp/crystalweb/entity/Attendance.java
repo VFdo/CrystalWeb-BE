@@ -30,12 +30,12 @@ public class Attendance extends SerializableObject {
     @NotNull(message = "Password is Required")
     private String password;
 
-    @NotNull(message = "Check in time is Required")
+    @NotNull(message = "Check date is Required")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
-    @NotNull(message = "Check out time is Required")
-    @JsonFormat(pattern = DateFormats.LOCAL_DATE_TIME)
+    @NotNull(message = "Check in time is Required")
+    @JsonFormat(pattern = DateFormats.LOCAL_TIME)
     private LocalDateTime inTime;
 
 //    @ManyToOne

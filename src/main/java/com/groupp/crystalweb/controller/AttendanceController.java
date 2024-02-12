@@ -21,7 +21,7 @@ public class AttendanceController {
     }
 
     //Save attendance
-    @PostMapping(value = "attendance",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("attendance")
     public ResponseEntity<ApiResponse> saveAttendance(@Valid @RequestBody AttendanceRequest attendanceRequest ){
         Attendance savedAttendance = attendanceService.saveAttendance(attendanceRequest);
         ApiResponse response = new ApiResponse(

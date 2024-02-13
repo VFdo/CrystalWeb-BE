@@ -9,6 +9,8 @@ import com.groupp.crystalweb.service.PetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class PetController {
@@ -64,6 +66,17 @@ public class PetController {
                 "Success",
                 allPets.first(),
                 (PageInfo) allPets.second()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/pet/client/{id}")
+    public ResponseEntity<ApiResponse> getClientPets(@PathVariable String id){
+        List<Pet> pets = petService.getAllPetsOfClient(id);
+        ApiResponse response = new ApiResponse(
+                200,
+                "Success",
+                pets
         );
         return ResponseEntity.ok(response);
     }

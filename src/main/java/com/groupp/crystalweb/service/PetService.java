@@ -88,6 +88,15 @@ public class PetService {
         return new Tuple<>(pets, pageInfo);
     }
 
+    public List<Pet> getAllPetsOfClient(String clientRefId) {
+        Optional<Client> clientFound = clientRepository.findByRefId(clientRefId);
+        Client client = null;
+        if(clientFound.isPresent()){
+            client = clientFound.get();
+        }
+        return petRepository.findByClient(client);
+    }
+
     public long deletePet(String id) {
         return petRepository.deleteByRefId(id);
     }
